@@ -1,4 +1,4 @@
-# [name or names of contributors]
+# [name/names of contributors]
 
 - [ ] checked functionality of the webpage
 - [ ] received help from a mentor/collaborator?
@@ -23,4 +23,4 @@
 
 
 ## Screenshots (if applicable)
-*
+* 
