@@ -1,4 +1,4 @@
-let ingredientsData = [
+let ingredientData = [
   {
     "id": 20081,
     "name": "wheat flour",
@@ -1234,4 +1234,4 @@ let ingredientsData = [
   }
 ]
 
-export default ingredientsData;
+export default ingredientData;

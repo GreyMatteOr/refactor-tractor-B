@@ -1,3 +1,5 @@
+import ingredientData from '../src/data/recipe-data';
+
 class Recipe {
   constructor(recipe) {
     this.id = recipe.id;
@@ -7,10 +9,10 @@ class Recipe {
     this.ingredients = recipe.ingredients;
   }
   calculateIngredientsCost() {
-    // return this.ingredients.map(i => {
-    //   ingredientData.find(ingredient => ingredient === i);
-    // });
+    return this.ingredients.map(i => {
+      ingredientData.find(ingredient => ingredient === i);
+    });
   }
 }
 
-module.exports = Recipe;
+export default Recipe;
