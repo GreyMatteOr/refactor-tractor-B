@@ -1,11 +1,9 @@
 import { expect } from 'chai';
 
 import User from '../src/user';
-//import data from '../src/data/users-data';
 
 describe('User', function() {
   let user;
-  //let userInfo;
   let recipes;
 
   beforeEach(function() {
@@ -4445,49 +4443,61 @@ describe('User', function() {
   })
 
   it('should take in the user\'s data as an argument', () => {
-    //expect(user.userData).to.deep.equal(userData);
     expect(user.id).to.equal(1);
     expect(user.name).to.equal('Saige O\'Kon');
     expect(user.pantry[0].ingredient).to.equal(11477);
     expect(user.favoriteRecipes).to.deep.equal([]);
     expect(user.recipesToCook).to.deep.equal([]);
-
   });
 
   it('should be able to add a recipe to favoriteRecipes', () => {
     user.saveRecipe(recipes[0]);
+
     expect(user.favoriteRecipes[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
   });
 
   it('should be able to remove a recipe from user\'s favoriteRecipes', () => {
     user.saveRecipe(recipes[1]);
     user.removeRecipe(recipes[1]);
+
     expect(user.favoriteRecipes).to.deep.equal([]);
   });
 
   it('should be able to decide to cook a recipe', () => {
     user.decideToCook(recipes[0]);
+
     expect(user.recipesToCook[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
   });
 
-  it.skip('should be able to filter favoriteRecipes by type', () => {
+  it('should be able to filter favoriteRecipes by type', () => {
     user.saveRecipe(recipes[0])
     user.saveRecipe(recipes[1]);
-    user.filterFavoriteRecipes('starter');
-    expect(user.favoriteRecipes).to.deep.equal([recipes[0]]);
+    user.filterFavoriteRecipes('dinner');
+
+    expect(user.filterFavoriteRecipes('dinner')).to.deep.equal([recipes[1]]);
   });
 
-  it.skip('should be able to filter recipesToCook by type', () => {
+  it('should be able to filter recipesToCook by type', () => {
+    user.decideToCook(recipes[0])
+    user.decideToCook(recipes[1]);
+    user.filterRecipesToCook('starter');
+
+    expect(user.filterRecipesToCook('starter')).to.deep.equal([recipes[0]]);
+  });
+
+  it('should be able to search saved recipes by name', () => {
     user.saveRecipe(recipes[0])
     user.saveRecipe(recipes[1]);
-    user.filterFavoriteRecipes('starter');
-    expect(user.recipesToCook).to.deep.equal([recipes[1]]);
+    user.searchSavedRecipes('Loaded Chocolate Chip Pudding Cookie Cups');
+
+    expect(user.searchSavedRecipes('Loaded Chocolate Chip Pudding Cookie Cups')).to.deep.equal([recipes[0]]);
   });
 
-  it.skip('should be able to search recipes by name or ingredient', () => {
-    user.saveRecipe(recipe);
-    user.searchForRecipe('dinner');
-    expect(user.favoriteRecipes).to.deep.equal([recipe]);
-  });
+  it('should be able to search saved recipes by ingredient', () => {
+    user.saveRecipe(recipes[0])
+    user.saveRecipe(recipes[1]);
+    user.searchSavedRecipes('all purpose flour');
 
+    expect(user.searchSavedRecipes('all purpose flour')).to.deep.equal([recipes[0]]);
+  });
 });

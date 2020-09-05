@@ -22,17 +22,25 @@ class User {
   }
 
   filterFavoriteRecipes(type) {
-    return this.favoriteRecipes.filter(recipe => recipe.tags.includes(type));
+    let filteredFavorites = this.favoriteRecipes.filter(recipe => {
+      return recipe.tags.includes(type);
+  })
+  return filteredFavorites;
   }
 
   filterRecipesToCook(type) {
-    return this.recipesToCook.filter(recipe => recipe.tags.includes(type));
-  }
+    let filteredtoCook = this.recipesToCook.filter(recipe => {
+      return recipe.tags.includes(type);
+  })
+  return filteredtoCook;
+ }
 
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+  searchSavedRecipes(keyword) {
+    let filteredSavedRecipes = this.favoriteRecipes.filter(recipe => {
+      return recipe.name.includes(keyword) || recipe.ingredients.some(ingredient => ingredient.name.includes(keyword));
+  })
+  return filteredSavedRecipes;
   }
-
 }
 
 module.exports = User;
