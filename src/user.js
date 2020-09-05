@@ -1,11 +1,13 @@
 class User {
-  constructor(user) {
-    this.id = user.id;
-    this.name = user.name;
-    this.pantry = user.pantry;
+  constructor(userData) {
+    this.userData = userData
+    this.id = userData.id;
+    this.name = userData.name;
+    this.pantry = userData.pantry;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
+
   saveRecipe(recipe) {
     this.favoriteRecipes.push(recipe);
   }
@@ -18,11 +20,26 @@ class User {
   decideToCook(recipe) {
     this.recipesToCook.push(recipe);
   }
-  filterRecipes(type) {
-    return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
+
+  filterFavoriteRecipes(type) {
+    let filteredFavorites = this.favoriteRecipes.filter(recipe => {
+      return recipe.tags.includes(type);
+  })
+  return filteredFavorites;
   }
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+
+  filterRecipesToCook(type) {
+    let filteredtoCook = this.recipesToCook.filter(recipe => {
+      return recipe.tags.includes(type);
+  })
+  return filteredtoCook;
+ }
+
+  searchSavedRecipes(keyword) {
+    let filteredSavedRecipes = this.favoriteRecipes.filter(recipe => {
+      return recipe.name.includes(keyword) || recipe.ingredients.some(ingredient => ingredient.name.includes(keyword));
+  })
+  return filteredSavedRecipes;
   }
 }
 
