@@ -1,5 +1,5 @@
 class Pantry {
-  constructor(stock) {
+  constructor(stock = []) {
     this.stock = stock.reduce((inventory, item) => {
       inventory[item.ingredient] = ( inventory[item.ingredient]
         ? inventory[item.ingredient] + item.amount
@@ -8,11 +8,10 @@ class Pantry {
     }, {});
   }
 
-  hasEnoughIngredients(recipe) {
+  hasEnoughIngredients(recipe = []) {
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
-    if ( !stillNeed.length ) return true;
     return stillNeed.map((food) => {
         let inStock = this.stock[food.id] || 0;
         let missingAmount = food.quantity.amount - inStock;
@@ -20,8 +19,8 @@ class Pantry {
       });
   }
 
-  removeIngredients(recipe) {
-    if(this.hasEnoughIngredients(recipe) === true) {
+  removeIngredients(recipe = []) {
+    if(!this.hasEnoughIngredients(recipe).length) {
       recipe.ingredients.forEach(food => this.stock[food.id] -= food.quantity.amount)
     }
   }

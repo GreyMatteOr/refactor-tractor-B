@@ -74,9 +74,9 @@ describe.only('Pantry', function() {
 
   describe('hasEnoughIngredients()', function() {
 
-    it('should return `true` if it has enough ingredients to make a given recipe', function() {
-      expect(pantry.hasEnoughIngredients(recipe1)).to.equal(true);
-      expect(pantry.hasEnoughIngredients(recipe2)).to.equal(true);
+    it('should return `[]` if it has enough ingredients to make a given recipe', function() {
+      expect(pantry.hasEnoughIngredients(recipe1)).to.deep.equal([]);
+      expect(pantry.hasEnoughIngredients(recipe2)).to.deep.equal([]);
     });
 
     it('should return an amount of each item still needed to complete a given recipe if the pantry doesn\'t contain enough', function() {
