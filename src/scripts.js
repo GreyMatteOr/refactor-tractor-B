@@ -75,7 +75,7 @@ function addToDom(recipeInfo, shortRecipeName) {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
 }
@@ -154,7 +154,7 @@ function addToMyRecipes() {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     if (!user.favoriteRecipes.includes(cardId)) {
-      event.target.src = "../images/apple-logo.png";
+      event.target.src = "./images/apple-logo.png";
       user.saveRecipe(cardId);
     } else {
       event.target.src = "../images/apple-logo-outline.png";

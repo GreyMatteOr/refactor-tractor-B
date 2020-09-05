@@ -12,6 +12,7 @@ import './images/search.png';
 import './images/apple-logo.png';
 import './images/cookbook.png';
 import './images/seasoning.png';
+import "./images/apple-logo-outline.png";
 // import './images/turing-logo.png'
 // import './images/turing-logo.png'
 // import './images/turing-logo.png'
