@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientsData from './data/ingredient-data';
+let users;
+let recipeData;
+let ingredientsData;
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -25,7 +25,7 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-
+window.addEventListener("load", retrieveData);
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
 window.addEventListener("load", generateUser);
@@ -37,6 +37,22 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
+// RETRIEVE DATA
+function retrieveData() {
+  Promise.all([
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'),
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'),
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+  ])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([wcUsersData, ingredsData, recipesData]) => {
+      users = wcUsersData;
+      ingredientsData = ingredsData;
+      recipeData = recipesData;
+    })
+    .catch(err => console.log(err))
+}
 
 // GENERATE A USER ON LOAD
 function generateUser() {
