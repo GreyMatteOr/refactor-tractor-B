@@ -26,9 +26,6 @@ let tagList = document.querySelector(".tag-list");
 let user;
 
 window.addEventListener("load", retrieveData);
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -46,10 +43,14 @@ function retrieveData() {
     fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
   ])
     .then(responses => Promise.all(responses.map(response => response.json())))
-    .then(([wcUsersData, ingredsData, recipesData]) => {
-      users = wcUsersData;
-      ingredientsData = ingredsData;
-      recipeData = recipesData;
+    .then(([u, i, r]) => {
+      users = u.wcUsersData;
+      ingredientsData = i.ingredientsData;
+      recipeData = r.recipeData;
+      console.log(ingredientsData, recipeData, users);
+      createCards();
+      findTags();
+      generateUser();
     })
     .catch(err => console.log(err))
 }
@@ -231,7 +232,8 @@ function addRecipeImage(recipe) {
 
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    let ingredientName = ingredientsData.find(ingredient => ingredient.id === i.id ).name;
+    return `${capitalize(ingredientName)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
 
@@ -359,7 +361,8 @@ function findRecipesWithCheckedIngredients(selected) {
   recipes.forEach(recipe => {
     let allRecipeIngredients = [];
     recipe.ingredients.forEach(ingredient => {
-      allRecipeIngredients.push(ingredient.name);
+      let name = ingredientsData.find(i => i.id === ingredient.id).name;
+      allRecipeIngredients.push(name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
       let domRecipe = document.getElementById(`${recipe.id}`);
