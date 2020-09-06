@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import users from './data/users-data';
-import recipeData from  './data/recipe-data';
-import ingredientsData from './data/ingredient-data';
+let users;
+let recipeData;
+let ingredientsData;
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -25,10 +25,7 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-
-window.addEventListener("load", createCards);
-window.addEventListener("load", findTags);
-window.addEventListener("load", generateUser);
+window.addEventListener("load", retrieveData);
 allRecipesBtn.addEventListener("click", showAllRecipes);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
@@ -37,6 +34,26 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+
+// RETRIEVE DATA
+function retrieveData() {
+  Promise.all([
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'),
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'),
+    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+  ])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([u, i, r]) => {
+      users = u.wcUsersData;
+      ingredientsData = i.ingredientsData;
+      recipeData = r.recipeData;
+      console.log(ingredientsData, recipeData, users);
+      createCards();
+      findTags();
+      generateUser();
+    })
+    .catch(err => console.log(err))
+}
 
 // GENERATE A USER ON LOAD
 function generateUser() {
@@ -215,7 +232,8 @@ function addRecipeImage(recipe) {
 
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+    let ingredientName = ingredientsData.find(ingredient => ingredient.id === i.id ).name;
+    return `${capitalize(ingredientName)} (${i.quantity.amount} ${i.quantity.unit})`
   }).join(", ");
 }
 
@@ -343,7 +361,8 @@ function findRecipesWithCheckedIngredients(selected) {
   recipes.forEach(recipe => {
     let allRecipeIngredients = [];
     recipe.ingredients.forEach(ingredient => {
-      allRecipeIngredients.push(ingredient.name);
+      let name = ingredientsData.find(i => i.id === ingredient.id).name;
+      allRecipeIngredients.push(name);
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
       let domRecipe = document.getElementById(`${recipe.id}`);
