@@ -1,29 +1,5 @@
-@mixin background-props {
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-@mixin buttons {
-  background-color: $dark-lime-green;
-  border: 0;
-  border-radius: 3px;
-  color: white;
-  cursor: pointer;
-  font-family: $quicksand;
-  font-size: 12pt;
-  font-weight: bold;
-  padding: 5px 10px 5px 10px;
-}
-
-$dark-lime-green: #359567;
-$pale-lime-green: #84C8A4;
-$gray-green: #b6dcca;
-$blue-gray: #5c7894;
-$blue-gray-2:#5B7894;
-$blue-gray-3: #475d74;
-$soft-green: #C4EB67;
-$silver: #DAE4EE;
-$quicksand: "Quicksand", sans-serif;
+@import "mixins.scss";
+@import "variables.scss";
 
 body {
   background-color: $blue-gray-2;
@@ -293,8 +269,6 @@ body {
     }
   }
 
-
-
   .card-apple-icon {
     cursor: pointer;
     float: right;
@@ -354,8 +328,6 @@ body {
     }
     @include buttons;
   }
-
-
 
 
   /* PANTRY LIST */

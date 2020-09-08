@@ -1,0 +1,16 @@
+@mixin background-props {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin buttons {
+  background-color: $dark-lime-green;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-family: $quicksand;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
+}
