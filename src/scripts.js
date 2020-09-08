@@ -92,9 +92,29 @@ function addToDom(recipeInfo, shortRecipeName) {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
+      <h4>Cost of Recipe: $${calculateIngredientsCost(recipeInfo).toFixed(2)}</h4>
       <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
+}
+
+function calculateIngredientsCost(recipe) {
+  let costs = [];
+  recipe.ingredients.forEach(ingredient => {
+    costs.push(getIngredientCost(ingredient));
+  });
+  let totalCost = costs.reduce((sum, num) => sum += num, 0);
+  return totalCost;
+}
+
+function getIngredientCost(ingredient) {
+  let cost = 0;
+  ingredientsData.forEach(ingredientData => {
+    if (ingredient.id === ingredientData.id) {
+      cost = ingredientData.estimatedCostInCents;
+    }
+  })
+  return (cost / 100);
 }
 
 // FILTER BY RECIPE TAGS
