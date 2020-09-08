@@ -222,6 +222,7 @@ body {
     justify-content: center;
     height: 100%;
     text-align: center;
+    grid-area: aside;
   }
 
   .wrap {
@@ -416,8 +417,6 @@ body {
       transition: .3s ease;
     }
   }
-
-
 
   #recipe-title {
     border-radius: 7px 7px 0px 0px;
