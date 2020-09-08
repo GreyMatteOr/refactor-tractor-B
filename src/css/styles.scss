@@ -407,12 +407,14 @@ main {
   margin: -4% -3% 2% -1%;
   position: fixed;
   transition: .3s ease;
+
+  &:hover {
+    background: $soft-green;
+    transition: .3s ease;
+  }
 }
 
-#exit-recipe-btn:hover {
-  background: $soft-green;
-  transition: .3s ease;
-}
+
 
 #recipe-title {
   background-repeat: no-repeat;
