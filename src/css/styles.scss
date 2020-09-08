@@ -1,6 +1,18 @@
-@mixin background-props{
+@mixin background-props {
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@mixin buttons {
+  background-color: $dark-lime-green;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-family: $quicksand;
+  font-size: 12pt;
+  font-weight: bold;
+  padding: 5px 10px 5px 10px;
 }
 
 $dark-lime-green: #359567;
@@ -11,7 +23,6 @@ $blue-gray-2:#5B7894;
 $blue-gray-3: #475d74;
 $soft-green: #C4EB67;
 $silver: #DAE4EE;
-
 $quicksand: "Quicksand", sans-serif;
 
 body {
@@ -325,33 +336,26 @@ body {
 
 
   /* BUTTONS */
-  .show-pantry-recipes-btn,
-  .show-all-btn,
-  .filter-btn {
-    background-color: $dark-lime-green;
-    border: 0;
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
-    font-family: $quicksand;
-    font-size: 12pt;
-    font-weight: bold;
-    padding: 5px 10px 5px 10px;
-  }
-
   .show-pantry-recipes-btn {
     margin-top: 10px;
+    @include buttons;
   }
 
   .show-all-btn {
     height: 40px;
     margin-top: 20px;
     width: 200px;
+    @include buttons;
   }
 
-  .filter-btn:hover {
-    background-color: $pale-lime-green;
+  .filter-btn {
+    &:hover {
+      background-color: $pale-lime-green;
+    }
+    @include buttons;
   }
+
+
 
 
   /* PANTRY LIST */
