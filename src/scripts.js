@@ -3,8 +3,9 @@ let users;
 let recipeData;
 let ingredientsData;
 
-import './css/base.scss';
-import './css/styles.scss';
+import './css/variables.scss';
+import './css/mixins.scss';
+import './css/index.scss';
 
 import User from './user';
 import Recipe from './recipe';
