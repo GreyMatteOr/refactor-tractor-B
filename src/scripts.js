@@ -23,6 +23,7 @@ let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
+let cookMeBtn = document.querySelector(".cook-me")
 let user;
 
 window.addEventListener("load", retrieveData);
@@ -34,6 +35,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+cookMeBtn.addEventListener("click", openRecipeInfo)
 
 // RETRIEVE DATA
 function retrieveData() {
@@ -92,30 +94,56 @@ function addToDom(recipeInfo, shortRecipeName) {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <h4>Cost of Recipe: $${calculateIngredientsCost(recipeInfo).toFixed(2)}</h4>
       <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <button class="cook-me">Cook Me!</button>
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
+  //instantiate new recipe in this function to get the calculateIngredientsCost to work
 }
 
-function calculateIngredientsCost(recipe) {
-  let costs = [];
-  recipe.ingredients.forEach(ingredient => {
-    costs.push(getIngredientCost(ingredient));
-  });
-  let totalCost = costs.reduce((sum, num) => sum += num, 0);
-  return totalCost;
+
+
+
+function displayRecipeToCook() {
+  if (user.recipesToCook.length > 0) {
+    const card = `
+  <article class="recipe-card-to-cook" data-id="${user.recipesToCook[0].id}">
+  <img class="white-star" src="../assets/star.svg">
+  <img class="red-star hidden" src="../assets/star-active.svg">
+    <section class="hidden-card-to-cook">
+    </section>
+    <section class="displayed-card">
+      <img class="recipe-img" src=${user.recipesToCook[0].image}>
+      <p class="recipe-to-cook-name">${user.recipesToCook[0].name}</p>
+      <p class="recipe-to-cook-text">Recipe To Cook</p>
+    </section>
+  </article>`
+    document.querySelector(`.user-recipes`).insertAdjacentHTML('afterbegin', card);
+    displayHiddenIngredients(user.recipesToCook[0], 'to-cook'); //refactor
+    displayHiddenInstructions(user.recipesToCook[0], 'to-cook');
+  }
 }
 
-function getIngredientCost(ingredient) {
-  let cost = 0;
-  ingredientsData.forEach(ingredientData => {
-    if (ingredient.id === ingredientData.id) {
-      cost = ingredientData.estimatedCostInCents;
-    }
-  })
-  return (cost / 100);
-}
+
+
+// function calculateIngredientsCost(recipe) {
+//   let costs = [];
+//   recipe.ingredients.forEach(ingredient => {
+//     costs.push(getIngredientCost(ingredient));
+//   });
+//   let totalCost = costs.reduce((sum, num) => sum += num, 0);
+//   return totalCost;
+// }
+//
+// function getIngredientCost(ingredient) {
+//   let cost = 0;
+//   ingredientsData.forEach(ingredientData => {
+//     if (ingredient.id === ingredientData.id) {
+//       cost = ingredientData.estimatedCostInCents;
+//     }
+//   })
+//   return (cost / 100);
+// }
 
 // FILTER BY RECIPE TAGS
 function findTags() {
@@ -231,9 +259,12 @@ function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  console.log("LABEL", recipe)
+  recipe = new Recipe(recipe)
   generateRecipeTitle(recipe, generateIngredients(recipe));
   addRecipeImage(recipe);
   generateInstructions(recipe);
+  displayShoppingList(user);
   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
@@ -241,9 +272,12 @@ function generateRecipeTitle(recipe, ingredients) {
   let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${recipe.name}</h3>
+    <h4>Cost of Recipe: $${recipe.calculateIngredientsCost(ingredientsData).toFixed(2)}</h4>
     <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
+    <p>${ingredients}</p>
+`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+
 }
 
 function addRecipeImage(recipe) {
@@ -267,6 +301,7 @@ function generateInstructions(recipe) {
   });
   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Shopping List</h4>")
 }
 
 function exitRecipe() {
@@ -390,3 +425,32 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   })
 }
+
+// function displayShoppingList(userData) {
+//   console.log("HERE")
+//   let userObj = new User(userData)
+//   // let userShoppingList = document.querySelector('.recipe-instructions')
+//   if (userObj.recipesToCook.length > 0) {
+//     console.log("NOTHERE")
+//     pantry.hasEnoughIngredients(userObj.recipesToCook[0]);
+//     userShoppingList.innerHTML = '<h3>Shopping List</h3>'
+//     pantry.shoppingList.forEach((item) => {
+//       const list = `
+//       <li class="ingredient">${itemNameById(item.id, ingredientsArray)}</li>
+//         <li class="amount">Qty: ${item.quantity.amount} - ${item.quantity.unit}</li>`;
+//         console.log("LIST", list)
+//         fullRecipeInfo.insertAdjacentHTML('beforeend', list);
+//       })
+//     }
+//     // return userShoppingList
+// }
+//
+// function itemNameById(itemId, ingredientsArray) {
+//   let name;
+//   ingredientsArray.forEach(ingredient => {
+//     if (ingredient.id === itemId) {
+//       name = ingredient.name
+//     }
+//   })
+//   return name;
+// }

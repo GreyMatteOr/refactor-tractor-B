@@ -102,19 +102,19 @@ describe.only('Pantry', function() {
     });
   });
 
-  describe('removeIngredients()', function() {
+  describe('removeFromPantry()', function() {
 
     it('should update the pantry\'s inventory based on a given recipe', function() {
-      pantry.removeIngredients(recipe1)
+      pantry.removeFromPantry(recipe1)
       expect(pantry.stock).to.deep.equal({1: 0.5, 2: 3, 3: 4, 4: 0.5});
 
-      pantry.removeIngredients(recipe2)
+      pantry.removeFromPantry(recipe2)
       expect(pantry.stock).to.deep.equal({1: 0.5, 2: 2.5, 3: 3, 4: 0.5});
     });
 
     it('should not remove any ingredients unless the recipe can be made', function() {
       recipe1.ingredients[0].quantity.amount = 3;
-      pantry.removeIngredients(recipe1)
+      pantry.removeFromPantry(recipe1)
       expect(pantry.stock).to.deep.equal({1: 2, 2: 3, 3: 4, 4: 0.5});
 
       let doesNotHave = {
@@ -128,7 +128,7 @@ describe.only('Pantry', function() {
           }
         ]
       }
-      pantry.removeIngredients(doesNotHave)
+      pantry.removeFromPantry(doesNotHave)
       expect(pantry.stock).to.deep.equal({1: 2, 2: 3, 3: 4, 4: 0.5});
     });
   });

@@ -24,6 +24,8 @@ class Pantry {
       recipe.ingredients.forEach(food => this.stock[food.id] -= food.quantity.amount)
     }
   }
+
+
 }
 
 module.exports = Pantry;
