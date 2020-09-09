@@ -9,3 +9,4 @@ export let searchForm = document.querySelector("#search");
 export let searchInput = document.querySelector("#search-input");
 export let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 export let tagList = document.querySelector(".tag-list");
+export let cookMeBtn = document.querySelector(".cook-me");

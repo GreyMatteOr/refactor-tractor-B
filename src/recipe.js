@@ -10,13 +10,16 @@ class Recipe {
     this.instructions = recipe.instructions
   }
 
+
   calculateIngredientsCost(ingredientData) {
-   let costData = ingredientData.filter(ingredient => this.ingredients.some(recipeIngredient => recipeIngredient.id === ingredient.id));
+   let costData = this.ingredients.filter(ingredient => this.ingredients.some(recipeIngredient => recipeIngredient.id === ingredient.id));
    return costData.reduce((totalCost, ingredient) => {
-     let ingredientAmount = this.ingredients.find(i => i.id === ingredient.id).quantity.amount
-     return totalCost + (ingredient.estimatedCostInCents * ingredientAmount)
+     let ingredientAmount = ingredient.quantity.amount
+     let costInDollars = ingredientData.find(i => i.id === ingredient.id).estimatedCostInCents / 100
+     return totalCost = (costInDollars * ingredientAmount)
    }, 0)
  }
+
 
   getInstructions() {
     return this.instructions;
