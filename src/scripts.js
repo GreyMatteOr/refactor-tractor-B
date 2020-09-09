@@ -1,8 +1,5 @@
 import $ from 'jquery';
-<<<<<<< HEAD
-import './css/base.scss';
-import './css/styles.scss';
-=======
+
 let users;
 let recipeData;
 let ingredientsData;
@@ -10,8 +7,6 @@ let ingredientsData;
 import './css/variables.scss';
 import './css/mixins.scss';
 import './css/index.scss';
-
->>>>>>> master
 import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
@@ -34,6 +29,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+cookMeBtn.addEventListener("click", openRecipeInfo)
 
 // RETRIEVE DATA
 function retrieveData() {
@@ -75,6 +71,65 @@ function createCards() {
     domUpdates.addToDom(recipeInfo, shortRecipeName, main)
   });
 }
+
+function addToDom(recipeInfo, shortRecipeName) {
+  let cardHtml = `
+    <div class="recipe-card" id=${recipeInfo.id}>
+      <h3 maxlength="40">${shortRecipeName}</h3>
+      <div class="card-photo-container">
+        <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
+        <div class="text">
+          <div>Click for Instructions</div>
+        </div>
+      </div>
+      <h4>${recipeInfo.tags[0]}</h4>
+      <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <button class="cook-me">Cook Me!</button>
+    </div>`
+  main.insertAdjacentHTML("beforeend", cardHtml);
+}
+
+function displayRecipeToCook() {
+  if (user.recipesToCook.length > 0) {
+    const card = `
+  <article class="recipe-card-to-cook" data-id="${user.recipesToCook[0].id}">
+  <img class="white-star" src="../assets/star.svg">
+  <img class="red-star hidden" src="../assets/star-active.svg">
+    <section class="hidden-card-to-cook">
+    </section>
+    <section class="displayed-card">
+      <img class="recipe-img" src=${user.recipesToCook[0].image}>
+      <p class="recipe-to-cook-name">${user.recipesToCook[0].name}</p>
+      <p class="recipe-to-cook-text">Recipe To Cook</p>
+    </section>
+  </article>`
+    document.querySelector(`.user-recipes`).insertAdjacentHTML('afterbegin', card);
+    displayHiddenIngredients(user.recipesToCook[0], 'to-cook'); //refactor
+    displayHiddenInstructions(user.recipesToCook[0], 'to-cook');
+  }
+}
+
+
+
+// function calculateIngredientsCost(recipe) {
+//   let costs = [];
+//   recipe.ingredients.forEach(ingredient => {
+//     costs.push(getIngredientCost(ingredient));
+//   });
+//   let totalCost = costs.reduce((sum, num) => sum += num, 0);
+//   return totalCost;
+// }
+//
+// function getIngredientCost(ingredient) {
+//   let cost = 0;
+//   ingredientsData.forEach(ingredientData => {
+//     if (ingredient.id === ingredientData.id) {
+//       cost = ingredientData.estimatedCostInCents;
+//     }
+//   })
+//   return (cost / 100);
+// }
+
 
 // FILTER BY RECIPE TAGS
 function findTags() {
@@ -166,6 +221,7 @@ function openRecipeInfo(event) {
   domUpdates.makeInline(fullRecipeInfo);
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+
   domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe, ingredientsData), fullRecipeInfo);
   domUpdates.addRecipeImage(recipe);
   domUpdates.generateInstructions(recipe, fullRecipeInfo);
@@ -179,10 +235,12 @@ function generateIngredients(recipe) {
   }).join(", ");
 }
 
+
 function capitalize(words) {
   return words.split(" ").map(word => {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }).join(" ");
+
 }
 
 // SEARCH RECIPES
@@ -260,3 +318,32 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   });
 }
+
+// function displayShoppingList(userData) {
+//   console.log("HERE")
+//   let userObj = new User(userData)
+//   // let userShoppingList = document.querySelector('.recipe-instructions')
+//   if (userObj.recipesToCook.length > 0) {
+//     console.log("NOTHERE")
+//     pantry.hasEnoughIngredients(userObj.recipesToCook[0]);
+//     userShoppingList.innerHTML = '<h3>Shopping List</h3>'
+//     pantry.shoppingList.forEach((item) => {
+//       const list = `
+//       <li class="ingredient">${itemNameById(item.id, ingredientsArray)}</li>
+//         <li class="amount">Qty: ${item.quantity.amount} - ${item.quantity.unit}</li>`;
+//         console.log("LIST", list)
+//         fullRecipeInfo.insertAdjacentHTML('beforeend', list);
+//       })
+//     }
+//     // return userShoppingList
+// }
+//
+// function itemNameById(itemId, ingredientsArray) {
+//   let name;
+//   ingredientsArray.forEach(ingredient => {
+//     if (ingredient.id === itemId) {
+//       name = ingredient.name
+//     }
+//   })
+//   return name;
+// }
