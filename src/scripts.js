@@ -1,6 +1,17 @@
 import $ from 'jquery';
+<<<<<<< HEAD
 import './css/base.scss';
 import './css/styles.scss';
+=======
+let users;
+let recipeData;
+let ingredientsData;
+
+import './css/variables.scss';
+import './css/mixins.scss';
+import './css/index.scss';
+
+>>>>>>> master
 import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
