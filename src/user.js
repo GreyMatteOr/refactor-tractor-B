@@ -1,9 +1,11 @@
+import Pantry from './pantry'
+
 class User {
   constructor(userData) {
     this.userData = userData
     this.id = userData.id;
     this.name = userData.name;
-    this.pantry = userData.pantry;
+    this.pantry = new Pantry(userData.pantry)
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
@@ -43,4 +45,4 @@ class User {
   }
 }
 
-module.exports = User;
+export default User;

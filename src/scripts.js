@@ -1,8 +1,5 @@
 import $ from 'jquery';
 
-let users;
-let recipeData;
-let ingredientsData;
 
 import './css/variables.scss';
 import './css/mixins.scss';
@@ -29,7 +26,7 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-cookMeBtn.addEventListener("click", openRecipeInfo)
+
 
 // RETRIEVE DATA
 function retrieveData() {
@@ -42,8 +39,7 @@ function retrieveData() {
     .then(([u, i, r]) => {
       users = u.wcUsersData;
       ingredientsData = i.ingredientsData;
-      recipeData = r.recipeData;
-      console.log(ingredientsData, recipeData, users);
+      recipeData = r.recipeData.map(recipe => new Recipe(recipe))
       createCards();
       findTags();
       generateUser();
@@ -62,13 +58,12 @@ function generateUser() {
 // CREATE RECIPE CARDS
 function createCards() {
   recipeData.forEach(recipe => {
-    let recipeInfo = new Recipe(recipe);
-    let shortRecipeName = recipeInfo.name;
-    recipes.push(recipeInfo);
-    if (recipeInfo.name.length > 40) {
-      shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
+    let shortRecipeName = recipe.name;
+    recipes.push(recipe);
+    if (recipe.name.length > 40) {
+      shortRecipeName = recipe.name.substring(0, 40) + "...";
     }
-    domUpdates.addToDom(recipeInfo, shortRecipeName, main)
+    domUpdates.addToDom(recipe, shortRecipeName, main)
   });
 }
 
@@ -221,11 +216,30 @@ function openRecipeInfo(event) {
   domUpdates.makeInline(fullRecipeInfo);
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  console.log("RECIP", recipe)
 
-  domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe, ingredientsData), fullRecipeInfo);
+  domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe, ingredientsData), fullRecipeInfo, ingredientsData);
   domUpdates.addRecipeImage(recipe);
   domUpdates.generateInstructions(recipe, fullRecipeInfo);
   domUpdates.addOverlay(fullRecipeInfo);
+  let userShoppingList = document.querySelector('.recipe-instructions')
+  let htmlString = "<button class='cook-me'>Cook Me</button>"
+  userShoppingList.innerHTML += htmlString
+  let cookMeBtn = document.querySelector('.cook-me')
+  cookMeBtn.addEventListener('click', function() {
+    console.log("MATTH", recipe)
+    checkPantryIngredients(recipe, user.pantry)
+  })
+}
+
+function checkPantryIngredients(recipe, pantry) {
+  let missingIngredients = pantry.hasEnoughIngredients(recipe)
+  let userShoppingList = document.querySelector('.recipe-instructions')
+  missingIngredients.forEach(ingredient => {
+    console.log("KJ", ingredient)
+    let ingredientName = ingredientsData.find(i => i.id == Object.keys(ingredient)[0]).name
+    userShoppingList.innerHTML += `<li>${ingredientName}: ${Object.values(ingredient)[0]}</li>`
+  })
 }
 
 function generateIngredients(recipe) {
@@ -265,14 +279,10 @@ function filterNonSearched(filtered) {
   domUpdates.hideRecipes(found);
 }
 
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
-}
 
 // CREATE AND USE PANTRY
 function findPantryInfo() {
-  user.pantry.forEach(item => {
+  user.pantry.ingredients.forEach(item => {
     let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
     });
@@ -318,32 +328,3 @@ function findRecipesWithCheckedIngredients(selected) {
     }
   });
 }
-
-// function displayShoppingList(userData) {
-//   console.log("HERE")
-//   let userObj = new User(userData)
-//   // let userShoppingList = document.querySelector('.recipe-instructions')
-//   if (userObj.recipesToCook.length > 0) {
-//     console.log("NOTHERE")
-//     pantry.hasEnoughIngredients(userObj.recipesToCook[0]);
-//     userShoppingList.innerHTML = '<h3>Shopping List</h3>'
-//     pantry.shoppingList.forEach((item) => {
-//       const list = `
-//       <li class="ingredient">${itemNameById(item.id, ingredientsArray)}</li>
-//         <li class="amount">Qty: ${item.quantity.amount} - ${item.quantity.unit}</li>`;
-//         console.log("LIST", list)
-//         fullRecipeInfo.insertAdjacentHTML('beforeend', list);
-//       })
-//     }
-//     // return userShoppingList
-// }
-//
-// function itemNameById(itemId, ingredientsArray) {
-//   let name;
-//   ingredientsArray.forEach(ingredient => {
-//     if (ingredient.id === itemId) {
-//       name = ingredient.name
-//     }
-//   })
-//   return name;
-// }
