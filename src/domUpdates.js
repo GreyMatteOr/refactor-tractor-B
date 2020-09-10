@@ -56,7 +56,7 @@ let domUpdates = {
     node.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
   },
 
-  generateRecipeTitle(recipe, ingredients, node) {
+  generateRecipeTitle(recipe, ingredients, node, ingredientsData) {
     let recipeTitle = `
       <button id="exit-recipe-btn">X</button>
       <h3 id="recipe-title">${recipe.name}</h3>

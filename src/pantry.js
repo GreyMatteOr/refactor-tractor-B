@@ -1,5 +1,6 @@
 class Pantry {
   constructor(stock = []) {
+    this.ingredients = stock;
     this.stock = stock.reduce((inventory, item) => {
       inventory[item.ingredient] = ( inventory[item.ingredient]
         ? inventory[item.ingredient] + item.amount
@@ -9,6 +10,7 @@ class Pantry {
   }
 
   hasEnoughIngredients(recipe = []) {
+    console.log(recipe.ingredients)
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
@@ -28,4 +30,4 @@ class Pantry {
 
 }
 
-module.exports = Pantry;
+export default Pantry;
