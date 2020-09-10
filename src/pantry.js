@@ -10,7 +10,6 @@ class Pantry {
   }
 
   hasEnoughIngredients(recipe = []) {
-    console.log(recipe.ingredients)
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
