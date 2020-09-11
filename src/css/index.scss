@@ -26,7 +26,7 @@ body {
     }
 
     h2 {
-      color: $pale-lime-green;
+      color: $dark-lime-green;
       margin: 10px 0px 10px 0px;
     }
 
@@ -39,8 +39,8 @@ body {
     }
 
     h4 {
-      color: $dark-lime-green;
-      background-color: $soft-green;
+      color: $white;
+      background-color: $blue-gray-2;
       border-radius: 3px;
       margin: 10px 0px 0px 0px;
       padding: 1px 4px 1px 4px;
@@ -324,9 +324,13 @@ body {
 
   .filter-btn {
     &:hover {
-      background-color: $pale-lime-green;
+      background-color: $blue-gray-2;
     }
     @include buttons;
+  }
+
+  .filter-btn {
+    background-color: $blue-gray-2;
   }
 
 
