@@ -8,6 +8,7 @@ class User {
     this.pantry = new Pantry(userData.pantry)
     this.favoriteRecipes = [];
     this.recipesToCook = [];
+    this.shoppingList = [];
   }
 
   saveRecipe(recipe) {

@@ -72,11 +72,11 @@ describe.only('Pantry', function() {
     });
   });
 
-  describe('hasEnoughIngredients()', function() {
+  describe('findMissingIngredients()', function() {
 
     it('should return `[]` if it has enough ingredients to make a given recipe', function() {
-      expect(pantry.hasEnoughIngredients(recipe1)).to.deep.equal([]);
-      expect(pantry.hasEnoughIngredients(recipe2)).to.deep.equal([]);
+      expect(pantry.findMissingIngredients(recipe1)).to.deep.equal([]);
+      expect(pantry.findMissingIngredients(recipe2)).to.deep.equal([]);
     });
 
     it('should return an amount of each item still needed to complete a given recipe if the pantry doesn\'t contain enough', function() {
@@ -94,27 +94,27 @@ describe.only('Pantry', function() {
       pantry.stock[1] = 0;
       pantry.stock[2] = 0;
       pantry.stock[3] = 0;
-      let recipe1Needs = [{1: 1.5}]
-      let recipe2Needs =[{2: 0.5}, {3: 1}]
-      expect(pantry.hasEnoughIngredients(doesNotHave)).to.deep.equal([{5: 1}]);
-      expect(pantry.hasEnoughIngredients(recipe1)).to.deep.equal(recipe1Needs);
-      expect(pantry.hasEnoughIngredients(recipe2)).to.deep.equal(recipe2Needs);
+      let recipe1Needs = [{id: 1, needs: 1.5, unit: 'c'}]
+      let recipe2Needs =[{id: 2, needs: 0.5, unit: 'tsp'}, {id: 3, needs: 1, unit: 'large'}]
+      expect(pantry.findMissingIngredients(doesNotHave)).to.deep.equal([{id: 5, needs: 1, unit: 'tsp'}]);
+      expect(pantry.findMissingIngredients(recipe1)).to.deep.equal(recipe1Needs);
+      expect(pantry.findMissingIngredients(recipe2)).to.deep.equal(recipe2Needs);
     });
   });
 
-  describe('removeFromPantry()', function() {
+  describe('removeIngredients()', function() {
 
     it('should update the pantry\'s inventory based on a given recipe', function() {
-      pantry.removeFromPantry(recipe1)
+      pantry.removeIngredients(recipe1)
       expect(pantry.stock).to.deep.equal({1: 0.5, 2: 3, 3: 4, 4: 0.5});
 
-      pantry.removeFromPantry(recipe2)
+      pantry.removeIngredients(recipe2)
       expect(pantry.stock).to.deep.equal({1: 0.5, 2: 2.5, 3: 3, 4: 0.5});
     });
 
     it('should not remove any ingredients unless the recipe can be made', function() {
       recipe1.ingredients[0].quantity.amount = 3;
-      pantry.removeFromPantry(recipe1)
+      pantry.removeIngredients(recipe1)
       expect(pantry.stock).to.deep.equal({1: 2, 2: 3, 3: 4, 4: 0.5});
 
       let doesNotHave = {
@@ -128,7 +128,7 @@ describe.only('Pantry', function() {
           }
         ]
       }
-      pantry.removeFromPantry(doesNotHave)
+      pantry.removeIngredients(doesNotHave)
       expect(pantry.stock).to.deep.equal({1: 2, 2: 3, 3: 4, 4: 0.5});
     });
   });
