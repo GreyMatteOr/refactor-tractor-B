@@ -26,7 +26,7 @@ let domUpdates = {
   listTags(allTags, node) {
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-        <label for="${tag}">${this.capitalize(tag)}</label></li>`;
+        <label for="${tag}">${domUpdates.capitalize(tag)}</label></li>`;
       node.insertAdjacentHTML("beforeend", tagHtml);
     });
   },

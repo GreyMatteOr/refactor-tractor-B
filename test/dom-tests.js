@@ -100,12 +100,17 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('listTags', function() {
-    it.skip('should return nothing', function() {
+    it('should run insertAdjacentHTML for each element of allTags', function() {
+      let listSpy = makeSpy(domUpdates.listTags);
+      let allTags = [
+        'breakfast',
+        'lunch',
+        'dinner'
+      ]
 
-    })
-
-    it.skip('should run insertAdjacentHTML for each element of allTags', function() {
-
+      listSpy(allTags, node);
+      expect(node.insertAdjacentHTML.calls).to.equal(3);
+      expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ', 'KJ', 'KJ']);
     })
 
     it('should be called with beforeend', function() {
@@ -117,18 +122,21 @@ describe.only('Dom Update Object', function() {
       ]
 
       listSpy(allTags, node);
-      expect(node.insertAdjacentHTML.calledWith[0][0]).to.deep.equal('beforeend')
+      expect(node.insertAdjacentHTML.calledWith[0][0]).to.deep.equal('beforeend');
     })
   })
 
   describe('capitalize', function() {
-    it.skip('should return an array of capitalized words', function() {
+    it('should return an array of capitalized words', function() {
+      let words = 'zebra elephant giraffe'
 
+      domUpdates.capitalize(words);
+      expect(domUpdates.capitalize(words)).to.deep.equal('Zebra Elephant Giraffe');
     })
   })
 
   describe('hideRecipes', function() {
-    it.skip('should...')
+    it.skip('should run for each ')
   })
 
   describe('updatePicture', function() {
