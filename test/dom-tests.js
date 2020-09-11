@@ -99,7 +99,63 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('listTags', function() {
-    let listSpy
+    it.skip('should return nothing', function() {
+
+    })
+
+    it.skip('should run insertAdjacentHTML for each element of allTags', function() {
+
+    })
+
+    it.skip('should be called with beforeend', function() {
+
+    })
+  })
+
+  describe('capitalize', function() {
+    it.skip('should return an array of capitalized words', function() {
+
+    })
+  })
+
+  describe('hideRecipes', function() {
+    it.skip('should...')
+  })
+
+  describe('updatePicture', function() {
+    it.skip('should...', function() {
+
+    })
+  })
+
+  describe('makeInline', function() {
+    it.skip('should ...', function () {
+
+    })
+  })
+
+  describe('addOverlay', function() {
+    it('should add text', function () {
+    let overlaySpy = makeSpy(domUpdates.addOverlay)
+    overlaySpy(node);
+
+    expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
+    })
+
+    it('should be called once', function () {
+    let overlaySpy = makeSpy(domUpdates.addOverlay)
+    overlaySpy(node);
+
+    expect(node.insertAdjacentHTML.calls).to.equal(1);
+    })
+
+    it('should be called with beforebegin and end of the div', function () {
+    let overlaySpy = makeSpy(domUpdates.addOverlay)
+    overlaySpy(node);
+
+    expect(node.insertAdjacentHTML.calledWith[0][0]).to.equal("beforebegin");
+    expect(node.insertAdjacentHTML.calledWith[0][1]).to.equal("<section id='overlay'></div>");
+    })
   })
 
 });
