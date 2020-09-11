@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import domUpdates from '../src/domUpdates.js';
+import recipe from '../src/recipe.js';
 
 function makeSpy(toTest) {
   function spy() {
@@ -107,8 +108,16 @@ describe.only('Dom Update Object', function() {
 
     })
 
-    it.skip('should be called with beforeend', function() {
+    it('should be called with beforeend', function() {
+      let listSpy = makeSpy(domUpdates.listTags);
+      let allTags = [
+        'breakfast',
+        'lunch',
+        'dinner'
+      ]
 
+      listSpy(allTags, node);
+      expect(node.insertAdjacentHTML.calledWith[0][0]).to.deep.equal('beforeend')
     })
   })
 
@@ -156,6 +165,29 @@ describe.only('Dom Update Object', function() {
     expect(node.insertAdjacentHTML.calledWith[0][0]).to.equal("beforebegin");
     expect(node.insertAdjacentHTML.calledWith[0][1]).to.equal("<section id='overlay'></div>");
     })
+  })
+
+  describe('generateRecipeTitle', function() {
+    it.skip('should add text', function () {
+      let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
+      let recipe1 = {
+        name: ''
+      }
+      let ingredients = []
+      let ingredientsData = ''
+
+      titleSpy(recipe1, ingredients, node, ingredientsData);
+      expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
+    })
+  })
+
+  describe('addRecipeImage', function () {
+    it('should', function () {
+      let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
+
+      expect(document.getElementById.calledWith).to.deep.equal([[".recipe-title"]]);
+    })
+
   })
 
 });
