@@ -47,4 +47,59 @@ describe.only('Dom Update Object', function() {
       expect(babySpy.calledWith).to.deep.equal([['Gertrude'],['Batilba']]);
     });
   });
+
+  describe('addToDom', function() {
+    it('should return nothing', function() {
+      let spyGuys = makeSpy(domUpdates.addToDom);
+      let recipeInfo = {
+        id: '',
+        name: '',
+        image: '',
+        tags: ['']
+      }
+      spyGuys(recipeInfo, '', node)
+      expect(spyGuys.returned).to.deep.equal([undefined])
+    })
+
+    it('should run insertAdjacentHTML once', function() {
+      let spyGuys = makeSpy(domUpdates.addToDom);
+      let recipeInfo = {
+        id: '',
+        name: '',
+        image: '',
+        tags: ['']
+      }
+      spyGuys(recipeInfo, '', node)
+      expect(node.insertAdjacentHTML.calls).to.equal(1);
+    })
+
+    it('should be called with beforeend', function() {
+      let spyGuys = makeSpy(domUpdates.addToDom);
+      let recipeInfo = {
+        id: '',
+        name: '',
+        image: '',
+        tags: ['']
+      }
+      let testString = `
+      <div class="recipe-card" id=>
+        <h3 maxlength="40"></h3>
+        <div class="card-photo-container">
+          <img src= class="card-photo-preview" alt=" recipe" title=" recipe">
+          <div class="text">
+            <div>Click for Instructions</div>
+          </div>
+        </div>
+        <h4></h4>
+        <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      </div>`
+      spyGuys(recipeInfo, '', node)
+      expect(node.insertAdjacentHTML.calledWith[0]).to.deep.equal(['beforeend', testString]);
+    })
+  })
+
+  describe('listTags', function() {
+    let listSpy
+  })
+
 });
