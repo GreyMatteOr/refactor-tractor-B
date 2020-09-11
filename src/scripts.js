@@ -7,10 +7,9 @@ import './css/index.scss';
 import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
-import {allRecipesBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, showPantryRecipes, tagList} from './dom-loader';
+import {allRecipesBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
 
 let ingredientsData;
-let menuOpen = false;
 let pantryInfo = [];
 let recipes = [];
 let recipeData;
@@ -21,9 +20,10 @@ window.addEventListener("load", retrieveData);
 allRecipesBtn.addEventListener("click", () => ( domUpdates.showAllRecipes(recipes) ));
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", () => menuOpen = domUpdates.toggleMenu(menuOpen));
+pantryBtn.addEventListener("click", domUpdates.toggleMenu);
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
+shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
@@ -40,6 +40,8 @@ function retrieveData() {
       users = u.wcUsersData;
       ingredientsData = i.ingredientsData;
       recipeData = r.recipeData.map(recipe => new Recipe(recipe))
+      console.log(ingredientsData)
+      console.log(recipeData)
       createCards();
       findTags();
       generateUser();
@@ -103,28 +105,6 @@ function displayRecipeToCook() {
     displayHiddenInstructions(user.recipesToCook[0], 'to-cook');
   }
 }
-
-
-
-// function calculateIngredientsCost(recipe) {
-//   let costs = [];
-//   recipe.ingredients.forEach(ingredient => {
-//     costs.push(getIngredientCost(ingredient));
-//   });
-//   let totalCost = costs.reduce((sum, num) => sum += num, 0);
-//   return totalCost;
-// }
-//
-// function getIngredientCost(ingredient) {
-//   let cost = 0;
-//   ingredientsData.forEach(ingredientData => {
-//     if (ingredient.id === ingredientData.id) {
-//       cost = ingredientData.estimatedCostInCents;
-//     }
-//   })
-//   return (cost / 100);
-// }
-
 
 // FILTER BY RECIPE TAGS
 function findTags() {
@@ -216,29 +196,39 @@ function openRecipeInfo(event) {
   domUpdates.makeInline(fullRecipeInfo);
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  console.log("RECIP", recipe)
-
   domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe, ingredientsData), fullRecipeInfo, ingredientsData);
   domUpdates.addRecipeImage(recipe);
   domUpdates.generateInstructions(recipe, fullRecipeInfo);
   domUpdates.addOverlay(fullRecipeInfo);
-  let userShoppingList = document.querySelector('.recipe-instructions')
-  let htmlString = "<button class='cook-me'>Cook Me</button>"
-  userShoppingList.innerHTML += htmlString
-  let cookMeBtn = document.querySelector('.cook-me')
-  cookMeBtn.addEventListener('click', function() {
-    console.log("MATTH", recipe)
-    checkPantryIngredients(recipe, user.pantry)
-  })
+  fullRecipeInfo.innerHTML += "<button id='cook-me'>Cook Me</button>";
+  document.querySelector('#cook-me').addEventListener('click', function() {
+    checkPantryIngredients(recipe, user.pantry);
+  });
 }
 
 function checkPantryIngredients(recipe, pantry) {
-  let missingIngredients = pantry.hasEnoughIngredients(recipe)
-  let userShoppingList = document.querySelector('.recipe-instructions')
+  let missingIngredients = pantry.findMissingIngredients(recipe);
+  fullRecipeInfo.innerHTML += `
+  <h4> Ingredients you are missing to complete this recipe </h4>
+  `
   missingIngredients.forEach(ingredient => {
-    console.log("KJ", ingredient)
-    let ingredientName = ingredientsData.find(i => i.id == Object.keys(ingredient)[0]).name
-    userShoppingList.innerHTML += `<li>${ingredientName}: ${Object.values(ingredient)[0]}</li>`
+    let ingredientName = ingredientsData.find(i => i.id == ingredient.id).name;
+    ingredient.name = ingredientName;
+    fullRecipeInfo.innerHTML += `<li>${ingredient.name}: ${ingredient.needs} ${ingredient.unit}</li>`;
+  });
+  fullRecipeInfo.innerHTML += `
+  <button id='add-cart'>Add to Cart</button>
+  `;
+  document.querySelector('#add-cart').addEventListener('click', function() {
+    addIngredientsToList(missingIngredients);
+  })
+}
+
+function addIngredientsToList(ingredients) {
+  ingredients.forEach(item => {
+    let exists = user.shoppingList.find(i => i.id === item.id);
+    if(exists) exists.needs += item.needs;
+    else user.shoppingList = user.shoppingList.concat(item);
   })
 }
 

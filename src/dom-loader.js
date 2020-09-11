@@ -7,5 +7,6 @@ export let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
 export let searchBtn = document.querySelector(".search-btn");
 export let searchForm = document.querySelector("#search");
 export let searchInput = document.querySelector("#search-input");
+export let shoppingList = document.querySelector(".my-list-btn");
 export let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 export let tagList = document.querySelector(".tag-list");

@@ -310,7 +310,7 @@ body {
 
 
   /* BUTTONS */
-  .show-pantry-recipes-btn {
+  .show-pantry-recipes-btn, .buy-btn {
     margin-top: 10px;
     @include buttons;
   }
@@ -331,10 +331,9 @@ body {
 
 
   /* PANTRY LIST */
-  .drop-menu {
+  .drop-menu, .shopping-list {
     align-items: center;
     background-color: $silver;
-    display: none;
     height: 600px;
     margin-left: 81%;
     margin-top: 92px;
@@ -345,12 +344,12 @@ body {
     width: 250px;
     z-index: 3;
 
-    .drop-menu h2 {
+    h2 {
       color: $dark-lime-green;
       margin: 0px;
     }
 
-    .pantry-list {
+    .pantry-list, .buy-ingredient-list{
       color: #000000;
       padding-left: 15px;
       text-align: left;
@@ -428,5 +427,9 @@ body {
     top:0;
     width:100%;
     z-index:100;
+  }
+
+  .hidden {
+    display: none;
   }
 }

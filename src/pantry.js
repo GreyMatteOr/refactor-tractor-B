@@ -9,19 +9,19 @@ class Pantry {
     }, {});
   }
 
-  hasEnoughIngredients(recipe = []) {
+  findMissingIngredients(recipe = []) {
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
     return stillNeed.map((food) => {
         let inStock = this.stock[food.id] || 0;
         let missingAmount = food.quantity.amount - inStock;
-        return {[food.id]: missingAmount};
+        return {id: food.id, needs: missingAmount, unit: food.quantity.unit};
       });
   }
 
   removeIngredients(recipe = []) {
-    if(!this.hasEnoughIngredients(recipe).length) {
+    if(!this.findMissingIngredients(recipe).length) {
       recipe.ingredients.forEach(food => this.stock[food.id] -= food.quantity.amount)
     }
   }

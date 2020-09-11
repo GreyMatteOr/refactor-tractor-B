@@ -106,14 +106,22 @@ let domUpdates = {
     domUpdates.showWelcomeBanner();
   },
 
-  toggleMenu(menuOpen) {
-    var menuDropdown = document.querySelector(".drop-menu");
-    if (!menuOpen) {
-      menuDropdown.style.display = "block";
-    } else {
-      menuDropdown.style.display = "none";
-    }
-    return !menuOpen;
+  toggleMenu() {
+    document.querySelector(".drop-menu").classList.toggle('hidden');
+    document.querySelector(".shopping-list").classList.add('hidden');
+  },
+
+  toggleShoppingList(list) {
+    document.querySelector(".drop-menu").classList.add('hidden');
+    let needNode = document.querySelector(".shopping-list");
+    let shoppingList = document.querySelector(".buy-ingredient-list");
+    needNode.classList.toggle('hidden');
+    shoppingList.innerHTML = '';
+    list.forEach(item => {
+      console.log(item)
+      shoppingList.innerHTML += `<li id="${item.name}>
+        <label for="${item.name}">${item.name}, ${item.needs} ${item.unit}</label></li>`
+    })
   },
 
   displayPantryInfo(pantry) {
