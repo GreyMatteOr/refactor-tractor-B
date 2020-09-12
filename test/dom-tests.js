@@ -6,6 +6,9 @@ import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
 import Recipe from '../src/recipe';
 
+ global.window = {}
+
+
 function makeSpy(toTest) {
   function spy() {
     spy.calledWith.push(Array.from(arguments))
@@ -25,9 +28,11 @@ describe.only('Dom Update Object', function() {
   beforeEach(function () {
     global.document = {};
     node = {};
-    node.insertAdjacentHTML = makeSpy(() => 'KJ')
+    node.insertAdjacentHTML = makeSpy(() => 'KJ');
+
     global.document.querySelector = makeSpy(() => {
       return node;
+
     });
   });
 
@@ -141,17 +146,16 @@ describe.only('Dom Update Object', function() {
   describe('hideRecipes', function() {
     it.skip('should run for each recipe', function() {
       let hideRecipesSpy = makeSpy(domUpdates.hideRecipes);
-
-      let sampleRecipe = [{
+      let recipes = [{
+        id: '',
         name: '',
-        id: ''
-      },
-      { name: '',
-        id: ''
+        image: '',
+        ingredients: [],
+        tags: ['']
       }]
 
-      hideRecipesSpy(sampleRecipe);
-      expect(hideRecipesSpy(sampleRecipe).calls).to.equal(2);
+      hideRecipesSpy(recipes);
+      expect(hideRecipesSpy(recipes).calls).to.equal(1);
       //expect(global.document.getElementById.calls).to.equal(2);
       //expect(global.document.getElementById.returned).to.deep.equal(['KJ', 'KJ']);
 
@@ -160,8 +164,20 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('updatePicture', function() {
-    it.skip('should...', function() {
+    it('should update the image', function() {
+      let pictureSpy = makeSpy(domUpdates.updatePicture);
+      let image = '../src/images/apple-logo.png'
 
+      pictureSpy(node, image);
+      expect(node.src).to.equal(image);
+    })
+
+    it('should run once', function() {
+      let pictureSpy = makeSpy(domUpdates.updatePicture);
+      let image = '../src/images/apple-logo.png'
+
+      pictureSpy(node, image);
+      expect(pictureSpy.calls).to.equal(1);
     })
   })
 
@@ -234,7 +250,7 @@ describe.only('Dom Update Object', function() {
     })
 
     it('should return nothing', function() {
-      let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
+
       let ingredientsData = ''
       let recipe = new Recipe({
         id: '',
@@ -243,7 +259,7 @@ describe.only('Dom Update Object', function() {
         ingredients: [],
         tags: ['']
       })
-
+        let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
       titleSpy(recipe, '', node, '');
       expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
     })
