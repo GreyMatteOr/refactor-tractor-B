@@ -1,7 +1,10 @@
 import { expect } from 'chai';
+//const spies = require('chai-spies');
+//chai.use(spies);
 
 import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
+import Recipe from '../src/recipe';
 
 function makeSpy(toTest) {
   function spy() {
@@ -128,15 +131,32 @@ describe.only('Dom Update Object', function() {
 
   describe('capitalize', function() {
     it('should return an array of capitalized words', function() {
-      let words = 'zebra elephant giraffe'
+      let sampleWords = 'zebra elephant giraffe'
 
-      domUpdates.capitalize(words);
-      expect(domUpdates.capitalize(words)).to.deep.equal('Zebra Elephant Giraffe');
+      domUpdates.capitalize(sampleWords);
+      expect(domUpdates.capitalize(sampleWords)).to.deep.equal('Zebra Elephant Giraffe');
     })
   })
 
   describe('hideRecipes', function() {
-    it.skip('should run for each ')
+    it.skip('should run for each recipe', function() {
+      let hideRecipesSpy = makeSpy(domUpdates.hideRecipes);
+
+      let sampleRecipe = [{
+        name: '',
+        id: ''
+      },
+      { name: '',
+        id: ''
+      }]
+
+      hideRecipesSpy(sampleRecipe);
+      expect(hideRecipesSpy(sampleRecipe).calls).to.equal(2);
+      //expect(global.document.getElementById.calls).to.equal(2);
+      //expect(global.document.getElementById.returned).to.deep.equal(['KJ', 'KJ']);
+
+      //**FAILING** TypeError: document.getElementById is not a function
+    })
   })
 
   describe('updatePicture', function() {
@@ -176,21 +196,61 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('generateRecipeTitle', function() {
-    it.skip('should add text', function () {
+    it('should be called with beforeend', function () {
       let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
-      let recipe1 = {
-        name: ''
-      }
-      let ingredients = []
       let ingredientsData = ''
+      let testString = `
+      <button id="exit-recipe-btn">X</button>
+      <h3 id="recipe-title"></h3>
+      <h4>Cost of Recipe: 0.00</h4>
+      <h4>Ingredients</h4>
+      <p></p>`;
 
-      titleSpy(recipe1, ingredients, node, ingredientsData);
+        let recipe = new Recipe({
+          id: '',
+          name: '',
+          image: '',
+          ingredients: [],
+          tags: ['']
+        })
+
+      titleSpy(recipe, '', node, '');
+      expect(node.insertAdjacentHTML.calledWith[0]).to.deep.equal(['beforeend', testString]);
+    })
+
+    it('should be called once', function() {
+      let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
+      let ingredientsData = ''
+      let recipe = new Recipe({
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      })
+
+      titleSpy(recipe, '', node, '');
+      expect(node.insertAdjacentHTML.calls).to.equal(1);
+    })
+
+    it('should return nothing', function() {
+      let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
+      let ingredientsData = ''
+      let recipe = new Recipe({
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      })
+
+      titleSpy(recipe, '', node, '');
       expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
     })
   })
 
   describe('addRecipeImage', function () {
-    it('should', function () {
+    it.skip('should', function () {
       let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
 
       expect(document.getElementById.calledWith).to.deep.equal([[".recipe-title"]]);
