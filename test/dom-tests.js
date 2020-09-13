@@ -29,6 +29,8 @@ describe.only('Dom Update Object', function() {
     global.document = {};
     node = {};
     node.insertAdjacentHTML = makeSpy(() => 'KJ');
+    node.style = {};
+    //node.style.display = {};
 
     global.document.querySelector = makeSpy(() => {
       return node;
@@ -149,7 +151,53 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('hideRecipes', function() {
-    it.skip('should run for each recipe', function() {
+    it('should run for each recipe', function() {
+      let hideRecipesSpy = makeSpy(domUpdates.hideRecipes);
+      let recipes = [{
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      },
+      {
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      }]
+
+      hideRecipesSpy(recipes);
+      //expect(node.style.display).to.equal('none');
+      expect(global.document.getElementById.calls).to.equal(2);
+      //expect(global.document.getElementById.returned).to.deep.equal([node]);
+
+      //**FAILING** TypeError: document.getElementById is not a function
+    })
+
+    it('should assign the style display', function() {
+      let hideRecipesSpy = makeSpy(domUpdates.hideRecipes);
+      let recipes = [{
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      },
+      {
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      }]
+
+      hideRecipesSpy(recipes);
+      expect(node.style.display).to.equal('none');
+    })
+
+    it('should return nothing', function() {
       let hideRecipesSpy = makeSpy(domUpdates.hideRecipes);
       let recipes = [{
         id: '',
@@ -160,12 +208,9 @@ describe.only('Dom Update Object', function() {
       }]
 
       hideRecipesSpy(recipes);
-      expect(hideRecipesSpy(recipes).calls).to.equal(1);
-      //expect(global.document.getElementById.calls).to.equal(2);
-      //expect(global.document.getElementById.returned).to.deep.equal(['KJ', 'KJ']);
-
-      //**FAILING** TypeError: document.getElementById is not a function
+      expect(global.document.getElementById.returned).to.deep.equal([node]);
     })
+
   })
 
   describe('updatePicture', function() {
@@ -187,12 +232,11 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('makeInline', function() {
-    it.skip('should run once', function () {
+    it('should set the style.display to inline', function () {
       let inLineSpy = makeSpy(domUpdates.makeInline);
 
       inLineSpy(node);
-      expect(node.style.display.calls).to.equal(1)
-      //**FAILED** TypeError: Cannot set property 'display' of undefined
+      expect(node.style.display).to.equal('inline');
     })
 
     it.skip('should have the value of inline', function () {
