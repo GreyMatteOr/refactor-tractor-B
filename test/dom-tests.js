@@ -5,7 +5,6 @@ import { expect } from 'chai';
 import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
 import Recipe from '../src/recipe';
-import toggle from '../src/domUpdates.js'
 
  global.window = {}
 
