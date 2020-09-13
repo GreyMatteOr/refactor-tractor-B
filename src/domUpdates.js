@@ -23,6 +23,27 @@ let domUpdates = {
     node.insertAdjacentHTML("beforeend", cardHtml);
   },
 
+
+  displayRecipeToCook() {
+    if (user.recipesToCook.length > 0) {
+      const card = `
+    <article class="recipe-card-to-cook" data-id="${user.recipesToCook[0].id}">
+    <img class="white-star" src="../assets/star.svg">
+    <img class="red-star hidden" src="../assets/star-active.svg">
+      <section class="hidden-card-to-cook">
+      </section>
+      <section class="displayed-card">
+        <img class="recipe-img" src=${user.recipesToCook[0].image}>
+        <p class="recipe-to-cook-name">${user.recipesToCook[0].name}</p>
+        <p class="recipe-to-cook-text">Recipe To Cook</p>
+      </section>
+    </article>`
+      document.querySelector(`.user-recipes`).insertAdjacentHTML('afterbegin', card);
+      displayHiddenIngredients(user.recipesToCook[0], 'to-cook'); //refactor
+      displayHiddenInstructions(user.recipesToCook[0], 'to-cook');
+    }
+  },
+
   listTags(allTags, node) {
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
