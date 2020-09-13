@@ -440,7 +440,7 @@ describe.only('Dom Update Object', function() {
 
 
   describe('showAllRecipes', function(){
-    it.skip('should run once for each recipe', function(){
+    it('should run once for each recipe', function(){
       let showAllSpy = makeSpy(domUpdates.showAllRecipes);
       let recipes = [{
         id: '1',
@@ -452,9 +452,18 @@ describe.only('Dom Update Object', function() {
         }]
 
       showAllSpy(recipes);
-      expect(showAllSpy(recipes).calls).to.equal(2);
+      expect(document.getElementById.calls).to.equal(2);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should invoke showWelcomeBanner()', function() {
+      let showAllSpy = makeSpy(domUpdates.showAllRecipes);
+      let recipes = [{
+        id: '1',
+        name: '11',
+        }]
+      showAllSpy(recipes);
+      expect(global.document.querySelector.calls).to.equal(2);
+    })
   })
 
   describe('toggleMenu', function(){
