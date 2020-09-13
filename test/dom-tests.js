@@ -550,17 +550,33 @@ describe.only('Dom Update Object', function() {
 
         pantrySpy(pantry);
         expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
-        //**FAILED** ReferenceError: ingredient is not defined
+      })
+    })
+
+    describe('hideRecipe', function() {
+      it('should display the ID taken in as parameter', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
+
+        hideSpy(id);
+        expect(document.getElementById.calledWith[0]).to.deep.equal([`${id}`]);
       })
 
-      describe('hideRecipe', function() {
-        it.skip('should run once', function(){
+      it('should be called once', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
 
-        })
+        hideSpy(id);
+        expect(document.getElementById.calls).to.equal(1);
+      })
 
-        it.skip('should...', function(){
+      it('should assign style display property', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
 
-        })
+        expect(node.style.display).to.equal(undefined);
+        hideSpy(id);
+        expect(node.style.display).to.equal('none');
       })
     })
 
