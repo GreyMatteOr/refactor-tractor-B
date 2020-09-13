@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
 import Recipe from '../src/recipe';
+import toggle from '../src/domUpdates.js'
 
  global.window = {}
 
@@ -30,7 +31,6 @@ describe.only('Dom Update Object', function() {
     node = {};
     node.insertAdjacentHTML = makeSpy(() => 'KJ');
     node.style = {};
-    //node.style.display = {};
 
     global.document.querySelector = makeSpy(() => {
       return node;
@@ -39,8 +39,9 @@ describe.only('Dom Update Object', function() {
 
     global.document.getElementById = makeSpy(() => {
       return node;
-
     });
+
+    global.document.querySelector.classList = [];
   });
 
   describe('greetUser', function() {
@@ -468,21 +469,21 @@ describe.only('Dom Update Object', function() {
 
   describe('toggleMenu', function(){
     it.skip('should run once', function(){
-      let bannerSpy = makeSpy(domUpdates.toggle);
+      let toggleSpy = makeSpy(domUpdates.toggleMenu);
 
-      bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      toggleSpy();
+      expect(document.querySelector.calls).to.equal(1);
     })
 
     it.skip('should be called with classes', function(){
-      let bannerSpy = makeSpy(domUpdates.toggle);
+      let toggleSpy = makeSpy(domUpdates.toggleMenu);
 
-      bannerSpy();
-      expect(global.document.querySelector.calledWith[0]).to.deep.equal([".drop-menu"]);
-      expect(global.document.querySelector.calledWith[1]).to.deep.equal([".shopping-list"]);
+      toggleSpy();
+      expect(global.document.querySelector.calledWith).to.deep.equal(".drop-menu");
+      expect(global.document.querySelector.calledWith).to.deep.equal(".shopping-list");
     })
   })
-    //**FAILED** TypeError: spy.func is not a function
+    //**FAILED** TypeError: Cannot read property 'add' of undefined
 
     describe('toggleShoppingList', function() {
       it.skip('should run once for each element of the list', function(){
@@ -530,7 +531,7 @@ describe.only('Dom Update Object', function() {
         expect(global.document.querySelector.calls).to.equal(3);
       })
 
-      it.skip('should add to the pantry list for each ingredient in the pantry', function(){
+      it('should add to the pantry list for each ingredient in the pantry', function(){
         let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
         let pantry = [{
           name: 'flour',
@@ -543,8 +544,9 @@ describe.only('Dom Update Object', function() {
             count: 3
             }
           ];
+          let ingredient = pantry[1];
           let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-            <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+        <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
 
         pantrySpy(pantry);
         expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
