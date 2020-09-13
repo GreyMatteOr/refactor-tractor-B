@@ -26,7 +26,7 @@ let domUpdates = {
   listTags(allTags, node) {
     allTags.forEach(tag => {
       let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-        <label for="${tag}">${this.capitalize(tag)}</label></li>`;
+        <label for="${tag}">${domUpdates.capitalize(tag)}</label></li>`;
       node.insertAdjacentHTML("beforeend", tagHtml);
     });
   },
@@ -60,7 +60,7 @@ let domUpdates = {
     let recipeTitle = `
       <button id="exit-recipe-btn">X</button>
       <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Cost of Recipe: $${recipe.calculateIngredientsCost(ingredientsData).toFixed(2)}</h4>
+      <h4>Cost of Recipe: ${recipe.calculateIngredientsCost(ingredientsData).toFixed(2)}</h4>
       <h4>Ingredients</h4>
       <p>${ingredients}</p>`
     node.insertAdjacentHTML("beforeend", recipeTitle);
