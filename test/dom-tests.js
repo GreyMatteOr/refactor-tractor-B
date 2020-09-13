@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
 import Recipe from '../src/recipe';
+import toggle from '../src/domUpdates.js'
 
  global.window = {}
 
@@ -30,7 +31,6 @@ describe.only('Dom Update Object', function() {
     node = {};
     node.insertAdjacentHTML = makeSpy(() => 'KJ');
     node.style = {};
-    //node.style.display = {};
 
     global.document.querySelector = makeSpy(() => {
       return node;
@@ -39,8 +39,9 @@ describe.only('Dom Update Object', function() {
 
     global.document.getElementById = makeSpy(() => {
       return node;
-
     });
+
+    global.document.querySelector.classList = [];
   });
 
   describe('greetUser', function() {
@@ -306,11 +307,28 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('addRecipeImage', function () {
-    it.skip('should be called with a class', function () {
+    it('should be called with a class', function () {
       let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
 
-      expect(document.getElementById.calledWith).to.deep.equal(["recipe-title"]);
-      //**FAILED** TypeError: Cannot read property 'calledWith' of undefined
+      addRecipeSpy(recipe);
+      expect(document.getElementById.calledWith[0]).to.deep.equal(["recipe-title"]);
+      expect(document.getElementById.calls).to.equal(1);
+      expect(document.getElementById("recipe-title").style.backgroundImage).to.equal(`url(${recipe.image})`);
+    })
+
+    it('should run once', function () {
+      let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
+
+      addRecipeSpy(recipe);
+
+      expect(document.getElementById.calls).to.equal(1);
+    })
+
+    it('should add a background image to a recipe title', function () {
+      let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
+
+      addRecipeSpy(recipe);
+      expect(document.getElementById("recipe-title").style.backgroundImage).to.equal(`url(${recipe.image})`);
     })
   })
 
@@ -374,43 +392,56 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('showMyRecipesBanner', function(){
-    it.skip('should run once', function(){
+    it('should run twice', function(){
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it.skip('should be called with classes', function(){
+    it('should be called with classes', function(){
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calledWith[0]).to.deep.equal([".welcome-msg"]);
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should alter display type', function(){
+      let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
+
+      bannerSpy();
+      expect(document.querySelector(".my-recipes-banner").style.display).to.equal('block');
+    })
   })
 
   describe('showWelcomeBanner', function(){
-    it.skip('should run once', function(){
+    it('should run twice', function(){
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it.skip('should be called with classes', function(){
+    it('should be called with classes', function(){
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calledWith[0]).to.deep.equal([".welcome-msg"]);
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should alter display type', function(){
+      let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
+
+      bannerSpy();
+      expect(document.querySelector(".my-recipes-banner").style.display).to.equal('none');
+    })
   })
 
+
   describe('showAllRecipes', function(){
-    it.skip('should run once for each recipe', function(){
+    it('should run once for each recipe', function(){
       let showAllSpy = makeSpy(domUpdates.showAllRecipes);
       let recipes = [{
         id: '1',
@@ -422,28 +453,37 @@ describe.only('Dom Update Object', function() {
         }]
 
       showAllSpy(recipes);
-      expect(showAllSpy(recipes).calls).to.equal(2);
+      expect(document.getElementById.calls).to.equal(2);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should invoke showWelcomeBanner()', function() {
+      let showAllSpy = makeSpy(domUpdates.showAllRecipes);
+      let recipes = [{
+        id: '1',
+        name: '11',
+        }]
+      showAllSpy(recipes);
+      expect(global.document.querySelector.calls).to.equal(2);
+    })
   })
 
   describe('toggleMenu', function(){
     it.skip('should run once', function(){
-      let bannerSpy = makeSpy(domUpdates.toggle);
+      let toggleSpy = makeSpy(domUpdates.toggleMenu);
 
-      bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      toggleSpy();
+      expect(document.querySelector.calls).to.equal(1);
     })
 
     it.skip('should be called with classes', function(){
-      let bannerSpy = makeSpy(domUpdates.toggle);
+      let toggleSpy = makeSpy(domUpdates.toggleMenu);
 
-      bannerSpy();
-      expect(global.document.querySelector.calledWith[0]).to.deep.equal([".drop-menu"]);
-      expect(global.document.querySelector.calledWith[1]).to.deep.equal([".shopping-list"]);
+      toggleSpy();
+      expect(global.document.querySelector.calledWith).to.deep.equal(".drop-menu");
+      expect(global.document.querySelector.calledWith).to.deep.equal(".shopping-list");
     })
   })
-    //**FAILED** TypeError: spy.func is not a function
+    //**FAILED** TypeError: Cannot read property 'add' of undefined
 
     describe('toggleShoppingList', function() {
       it.skip('should run once for each element of the list', function(){
@@ -491,7 +531,7 @@ describe.only('Dom Update Object', function() {
         expect(global.document.querySelector.calls).to.equal(3);
       })
 
-      it.skip('should add to the pantry list for each ingredient in the pantry', function(){
+      it('should add to the pantry list for each ingredient in the pantry', function(){
         let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
         let pantry = [{
           name: 'flour',
@@ -504,29 +544,39 @@ describe.only('Dom Update Object', function() {
             count: 3
             }
           ];
+          let ingredient = pantry[1];
           let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-            <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+        <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
 
         pantrySpy(pantry);
         expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
-        //**FAILED** ReferenceError: ingredient is not defined
-      })
-
-      describe('hideRecipe', function() {
-        it.skip('should run once', function(){
-
-        })
-
-        it.skip('should...', function(){
-
-        })
       })
     })
 
+    describe('hideRecipe', function() {
+      it('should display the ID taken in as parameter', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
 
+        hideSpy(id);
+        expect(document.getElementById.calledWith[0]).to.deep.equal([`${id}`]);
+      })
 
+      it('should be called once', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
 
+        hideSpy(id);
+        expect(document.getElementById.calls).to.equal(1);
+      })
 
+      it('should assign style display property', function(){
+        let hideSpy = makeSpy(domUpdates.hideRecipe);
+        let id = 1;
 
-
+        expect(node.style.display).to.equal(undefined);
+        hideSpy(id);
+        expect(node.style.display).to.equal('none');
+      })
+    })
 });
