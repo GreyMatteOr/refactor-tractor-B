@@ -391,40 +391,53 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('showMyRecipesBanner', function(){
-    it.skip('should run once', function(){
+    it('should run twice', function(){
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it.skip('should be called with classes', function(){
+    it('should be called with classes', function(){
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calledWith[0]).to.deep.equal([".welcome-msg"]);
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should alter display type', function(){
+      let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
+
+      bannerSpy();
+      expect(document.querySelector(".my-recipes-banner").style.display).to.equal('block');
+    })
   })
 
   describe('showWelcomeBanner', function(){
-    it.skip('should run once', function(){
+    it('should run twice', function(){
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
-      expect(global.document.querySelector.calls).to.equal(1);
+      expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it.skip('should be called with classes', function(){
+    it('should be called with classes', function(){
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calledWith[0]).to.deep.equal([".welcome-msg"]);
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
-    //**FAILED** TypeError: Cannot set property 'display' of undefined
+
+    it('should alter display type', function(){
+      let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
+
+      bannerSpy();
+      expect(document.querySelector(".my-recipes-banner").style.display).to.equal('none');
+    })
   })
+
 
   describe('showAllRecipes', function(){
     it.skip('should run once for each recipe', function(){
