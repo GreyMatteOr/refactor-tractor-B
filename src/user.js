@@ -44,6 +44,19 @@ class User {
   })
   return filteredSavedRecipes;
   }
+
+  getAllMissingIngredients() {
+    let output = [];
+    this.recipesToCook.forEach(recipe => {
+      let missing = this.pantry.findMissingIngredients(recipe);
+      missing.forEach(ingredient => {
+        let current = output.find(i => i.id === ingredient.id);
+        if (current === undefined) output.push(ingredient);
+        else current.needs += ingredient.needs;
+      });
+    });
+    return output;
+  }
 }
 
 export default User;

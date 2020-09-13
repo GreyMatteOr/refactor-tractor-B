@@ -1,4 +1,6 @@
 export let allRecipesBtn = document.querySelector(".show-all-btn");
+export let buyBtn = document.querySelector('#buy-btn');
+export let buyUserListBtn = document.querySelector('#buy-user-list-btn')
 export let filterBtn = document.querySelector(".filter-btn");
 export let fullRecipeInfo = document.querySelector(".recipe-instructions");
 export let main = document.querySelector("main");

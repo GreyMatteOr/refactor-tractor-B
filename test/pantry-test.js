@@ -100,6 +100,10 @@ describe.only('Pantry', function() {
       expect(pantry.findMissingIngredients(recipe1)).to.deep.equal(recipe1Needs);
       expect(pantry.findMissingIngredients(recipe2)).to.deep.equal(recipe2Needs);
     });
+
+    // sadpath: empty array
+
+    // sadpath: invalid argument String. Number. Object
   });
 
   describe('removeIngredients()', function() {
