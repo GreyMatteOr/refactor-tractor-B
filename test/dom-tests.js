@@ -169,11 +169,7 @@ describe.only('Dom Update Object', function() {
       }]
 
       hideRecipesSpy(recipes);
-      //expect(node.style.display).to.equal('none');
       expect(global.document.getElementById.calls).to.equal(2);
-      //expect(global.document.getElementById.returned).to.deep.equal([node]);
-
-      //**FAILING** TypeError: document.getElementById is not a function
     })
 
     it('should assign the style display', function() {
@@ -210,7 +206,6 @@ describe.only('Dom Update Object', function() {
       hideRecipesSpy(recipes);
       expect(global.document.getElementById.returned).to.deep.equal([node]);
     })
-
   })
 
   describe('updatePicture', function() {
@@ -221,14 +216,6 @@ describe.only('Dom Update Object', function() {
       pictureSpy(node, image);
       expect(node.src).to.equal(image);
     })
-
-    it('should run once', function() {
-      let pictureSpy = makeSpy(domUpdates.updatePicture);
-      let image = '../src/images/apple-logo.png'
-
-      pictureSpy(node, image);
-      expect(pictureSpy.calls).to.equal(1);
-    })
   })
 
   describe('makeInline', function() {
@@ -237,15 +224,6 @@ describe.only('Dom Update Object', function() {
 
       inLineSpy(node);
       expect(node.style.display).to.equal('inline');
-    })
-
-    it.skip('should have the value of inline', function () {
-      let inLineSpy = makeSpy(domUpdates.makeInline);
-      node.style = '';
-
-      inLineSpy(node);
-      expect(inLineSpy(node)).to.equal('inline');
-      //**FAILED** TypeError: Cannot set property 'display' of undefined
     })
   })
 
