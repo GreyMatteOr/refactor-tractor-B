@@ -306,11 +306,28 @@ describe.only('Dom Update Object', function() {
   })
 
   describe('addRecipeImage', function () {
-    it.skip('should be called with a class', function () {
+    it('should be called with a class', function () {
       let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
 
-      expect(document.getElementById.calledWith).to.deep.equal(["recipe-title"]);
-      //**FAILED** TypeError: Cannot read property 'calledWith' of undefined
+      addRecipeSpy(recipe);
+      expect(document.getElementById.calledWith[0]).to.deep.equal(["recipe-title"]);
+      expect(document.getElementById.calls).to.equal(1);
+      expect(document.getElementById("recipe-title").style.backgroundImage).to.equal(`url(${recipe.image})`);
+    })
+
+    it('should run once', function () {
+      let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
+
+      addRecipeSpy(recipe);
+
+      expect(document.getElementById.calls).to.equal(1);
+    })
+
+    it('should add a background image to a recipe title', function () {
+      let addRecipeSpy = makeSpy(domUpdates.addRecipeImage);
+
+      addRecipeSpy(recipe);
+      expect(document.getElementById("recipe-title").style.backgroundImage).to.equal(`url(${recipe.image})`);
     })
   })
 
