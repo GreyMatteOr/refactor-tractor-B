@@ -1,13 +1,10 @@
 import { expect } from 'chai';
-//const spies = require('chai-spies');
-//chai.use(spies);
 
 import domUpdates from '../src/domUpdates.js';
 import recipe from '../src/recipe.js';
 import Recipe from '../src/recipe';
 
- global.window = {}
-
+global.window = {}
 
 function makeSpy(toTest) {
   function spy() {
@@ -384,12 +381,6 @@ describe.only('Dom Update Object', function() {
     })
   })
 
-  describe('exitRecipe', function() {
-    it.skip('should do something, but I do not know what', function(){
-
-    })
-  })
-
   describe('showMyRecipesBanner', function(){
     it('should run twice', function(){
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
@@ -438,7 +429,6 @@ describe.only('Dom Update Object', function() {
     })
   })
 
-
   describe('showAllRecipes', function(){
     it('should run once for each recipe', function(){
       let showAllSpy = makeSpy(domUpdates.showAllRecipes);
@@ -466,62 +456,7 @@ describe.only('Dom Update Object', function() {
     })
   })
 
-  describe('toggleMenu', function(){
-    it.skip('should run once', function(){
-      let toggleSpy = makeSpy(domUpdates.toggleMenu);
-
-      toggleSpy();
-      expect(document.querySelector.calls).to.equal(1);
-    })
-
-    it.skip('should be called with classes', function(){
-      let toggleSpy = makeSpy(domUpdates.toggleMenu);
-
-      toggleSpy();
-      expect(global.document.querySelector.calledWith).to.deep.equal(".drop-menu");
-      expect(global.document.querySelector.calledWith).to.deep.equal(".shopping-list");
-    })
-  })
-    //**FAILED** TypeError: Cannot read property 'add' of undefined
-
-    describe('toggleShoppingList', function() {
-      it.skip('should run once for each element of the list', function(){
-        let toggleSpy = makeSpy(domUpdates.toggleShoppingList);
-         let list =[{
-           name: '1',
-           needs: '2',
-           unit: '3'
-         },
-         {
-           name: '4',
-           needs: '5',
-           unit: '6'
-         }]
-
-         toggleSpy(list);
-         expect(global.document.querySelector.calls).to.equal(2);
-      })
-
-      it.skip('should be called with a certain class', function(){
-        let toggleSpy = makeSpy(domUpdates.toggleShoppingList);
-         let list =[{
-           name: '1',
-           needs: '2',
-           unit: '3'
-         },
-         {
-           name: '4',
-           needs: '5',
-           unit: '6'
-         }]
-
-         toggleSpy(list);
-         expect(global.document.querySelector.calledWith).to.deep.equal(['.drop-menu']);
-         //**FAILED** TypeError: Cannot read property 'add' of undefined
-      })
-    })
-
-    describe('displayPantryInfo', function(){
+  describe('displayPantryInfo', function(){
       it('should run for each ingredient in the pantry', function(){
         let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
         let pantry = ['flour', 'egg', 'salt'];
@@ -550,9 +485,9 @@ describe.only('Dom Update Object', function() {
         pantrySpy(pantry);
         expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
       })
-    })
+  })
 
-    describe('hideRecipe', function() {
+  describe('hideRecipe', function() {
       it('should display the ID taken in as parameter', function(){
         let hideSpy = makeSpy(domUpdates.hideRecipe);
         let id = 1;
