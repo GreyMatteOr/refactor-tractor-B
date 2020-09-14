@@ -32,7 +32,6 @@ class Pantry {
   calculateTimesCanMake(recipe = []) {
     if (recipe.length === 0) return null;
     return recipe.ingredients.reduce((lowest, current) => {
-      console.log(lowest, current);
       let inStock = (this.stock[current.id] === undefined ? 0 : this.stock[current.id])
       let timesCanMake = Math.floor(inStock / current.quantity.amount)
       if(lowest !== null) return Math.min(lowest, timesCanMake)

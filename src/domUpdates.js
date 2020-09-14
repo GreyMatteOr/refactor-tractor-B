@@ -139,7 +139,6 @@ let domUpdates = {
     needNode.classList.toggle('hidden');
     shoppingList.innerHTML = '';
     list.forEach(item => {
-      console.log(item)
       shoppingList.innerHTML += `<li id="${item.name}>
         <label for="${item.name}">${item.name}, ${item.needs} ${item.unit}</label></li>`
     })

@@ -42,7 +42,7 @@ function retrieveData() {
       users = u.wcUsersData;
       ingredientsData = i.ingredientsData;
       recipeData = r.recipeData.map(recipe => new Recipe(recipe))
-      // console.log(ingredientsData)
+      // console.log(users)
       // console.log(recipeData)
       createCards();
       findTags();
@@ -310,23 +310,49 @@ function findRecipesWithCheckedIngredients(selected) {
   });
 }
 
+// id: 19206
+// name: "instant vanilla pudding"
+// needs: 3
+// unit: "Tbsp"
+
+
 function buyCustomList() {
-  alert('bought!');
   document.querySelector(".buy-ingredient-list").innerHTML = '';
   user.shoppingList.forEach(item => {
-    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] + item.needs);
+    postUpdates(item);
   });
   user.shoppingList = [];
+}
+
+function postUpdates(item) {
+  let data = {
+    "userID": +user.id,
+    "ingredientID": +item.id,
+    "ingredientModification": +item.needs
+  }
+  let update = JSON.stringify(data);
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+      method: 'POST',
+      body: update,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  ).then(() => {
+    document.querySelector(".buy-ingredient-list").innerText = 'Bought!'
+    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] + item.needs)
+  })
+  .catch(() => document.querySelector(".buy-ingredient-list").innerText = 'Oops! Looks like something went wrong! Try again in a bit.')
 }
 
 function buyToCookList() {
   let missing = user.getAllMissingIngredients()
   let info = missing.reduce((output, item) => {
-    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] + item.needs);
+    postUpdates(item);
     let itemName = ingredientsData.find(ingredient => ingredient.id === item.id).name;
     return output + `\n${itemName}: ${item.needs} ${item.unit}`;
-  }, 'Bought:')
-  if(info === 'Bought:') info = 'You have everything you need!'
+  }, 'Putting in an Order For:')
+  if(info === 'Putting in an Order For:') info = 'You have everything you need!'
   alert(info);
   document.querySelector(".buy-ingredient-list").innerHTML = '';
 }
