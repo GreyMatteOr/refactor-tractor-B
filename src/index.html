@@ -15,7 +15,7 @@
     <link rel="icon" href="./images/shopping-cart-icon.png" alt="image of a shopping cart"/>
     <link rel="icon" href="./images/menu.png"/>
   </head>
-  <body role="main">
+  <body role="main" aria-label="">
     <header>
       <h1><span>fresh</span>Picks<img src="./images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="search" role="search">
@@ -25,6 +25,7 @@
         </label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="./images/search.png" alt="search button"></button>
       </form>
+      <!-- //when the screen reader reads an aria label it will read it instead of (for example the text on a button) -->
       <button class="nav-btn my-list-btn ing-pan-btn" type="button" name="button"><img src="./images/shopping-cart-icon.png" alt="shopping List button">Shopping List</button>
       <button class="nav-btn ing-pan-btn saved-recipes-btn" type="button" name="button"><img src="./images/cookbook.png" alt="search button">My Recipes</button>
       <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="./images/seasoning.png" alt="search button">My Pantry</button>
