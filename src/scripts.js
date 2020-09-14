@@ -16,6 +16,8 @@ let recipeData;
 let users;
 let user;
 
+
+
 window.addEventListener("load", retrieveData);
 allRecipesBtn.addEventListener("click", () => ( domUpdates.showAllRecipes(recipes) ));
 buyBtn.addEventListener('click', buyCustomList);
@@ -28,6 +30,7 @@ searchBtn.addEventListener("click", searchRecipes);
 shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+// hamburgerBtn.addEventListener('click', dropDownMobile)
 
 
 // RETRIEVE DATA
