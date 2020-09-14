@@ -155,8 +155,37 @@ let domUpdates = {
   hideRecipe(id) {
     let domRecipe = document.getElementById(`${id}`);
     domRecipe.style.display = "none";
-  }
+  },
 
+  addMissingIngredients(node, recipe, missingIngredients, ingredientsData, fullRecipeInfo, user) {
+    node.innerHTML += `
+      <h4 id='list-title'></h4>
+      <button class='hidden' id='cook-it'>Cook Me!</button>
+      <button id='add-cart'>Add to Cart</button>
+    `;
+    if (missingIngredients.length === 0) {
+      document.querySelector('#list-title').innerText = `You have everything you need to make this ${user.pantry.calculateTimesCanMake(recipe)} times!`;
+      document.querySelector('#add-cart').innerText = 'Add ingredients to make again to cart';
+      document.querySelector('#cook-it').classList.remove('hidden');
+    } else {
+      document.querySelector('#add-cart').innerText = 'Add to Cart';
+      document.querySelector('#list-title').innerText = 'The ingredients needed to make this recipe'
+      document.querySelector('#cook-it').classList.add('hidden');
+      missingIngredients.forEach(ingredient => {
+        let ingredientName = ingredientsData.find(i => i.id == ingredient.id).name;
+        ingredient.name = ingredientName;
+        fullRecipeInfo.innerHTML += `<li class='missing-ingredient'>${ingredient.name}: ${ingredient.needs} ${ingredient.unit}</li>`;
+      });
+    }
+    node.innerHTML += `
+      <button id='is-in-list'>${user.recipesToCook.includes(recipe) ? `Remove from 'will-cook' list` : `Add to 'will-cook' list`}</button>
+    `;
+  },
+
+  changeText(node, text) {
+    node.innerText = text;
+
+  }
 };
 
 export default domUpdates;
