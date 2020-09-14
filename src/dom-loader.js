@@ -12,3 +12,5 @@ export let searchInput = document.querySelector("#search-input");
 export let shoppingList = document.querySelector(".my-list-btn");
 export let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 export let tagList = document.querySelector(".tag-list");
+export let hamburgerBtn = document.querySelector('.hamburger')
+export let navBtn = document.querySelector('.nav-btn')

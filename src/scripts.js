@@ -7,7 +7,7 @@ import './css/index.scss';
 import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
-import {allRecipesBtn, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
+import {allRecipesBtn, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList, hamburgerBtn, navBtn} from './dom-loader';
 
 let ingredientsData;
 let pantryInfo = [];
@@ -15,6 +15,8 @@ let recipes = [];
 let recipeData;
 let users;
 let user;
+
+
 
 window.addEventListener("load", retrieveData);
 allRecipesBtn.addEventListener("click", () => ( domUpdates.showAllRecipes(recipes) ));
@@ -28,6 +30,7 @@ searchBtn.addEventListener("click", searchRecipes);
 shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+// hamburgerBtn.addEventListener('click', dropDownMobile)
 
 
 // RETRIEVE DATA
@@ -394,3 +397,14 @@ function buyToCookList() {
   alert(info);
   document.querySelector(".buy-ingredient-list").innerHTML = '';
 }
+
+// function dropDownMobile() {
+//   hamburgerBtn.classList.add('hidden')
+//   navBtn.classList.remove('hidden')
+//   searchForm.classList.remove('hidden')
+//
+//   // savedRecipesBtn.classList.remove('hidden')
+//   // pantryBtn.classList.remove('hidden')
+// }
+//
+// dropDownMobile();
