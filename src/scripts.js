@@ -319,12 +319,27 @@ function findRecipesWithCheckedIngredients(selected) {
 function buyCustomList() {
   document.querySelector(".buy-ingredient-list").innerHTML = '';
   user.shoppingList.forEach(item => {
-    postUpdates(item);
+    postBoughtItems(item);
   });
   user.shoppingList = [];
 }
 
-function postUpdates(item) {
+//function that will update the server with the stuff that they have used in the pantry
+//would like those ingredients to be removed from the pantry
+//removeIngredients method will remove ing from pantry once used
+
+//passing through the ing array that is on the recipe
+//each ingredient is an object
+//
+
+function cookRecipe(recipe) {
+  recipe.ingredients.forEach(ingredient => {
+    postRemoveItems({id: ingredient.id, needs: ingredient.quantity.amount})
+  })
+}
+
+
+function postBoughtItems(item) {
   let data = {
     "userID": +user.id,
     "ingredientID": +item.id,
@@ -345,10 +360,33 @@ function postUpdates(item) {
   .catch(() => document.querySelector(".buy-ingredient-list").innerText = 'Oops! Looks like something went wrong! Try again in a bit.')
 }
 
+function postRemoveItems(item) {
+  let data = {
+    "userID": +user.id,
+    "ingredientID": +item.id,
+    "ingredientModification": -item.needs
+  }
+  let update = JSON.stringify(data)
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+      method: 'POST',
+      body: update,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  ).then(() => {
+    // document..... ="Cooked!"
+    //once we cook it and the ingredients update we will need to update missing ingredients
+    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] - item.needs)
+  })
+  .catch(() => document.querySelector(".cook-recipe-button").innerText = "Oops! Looks like something went wrong! Try again in a bit.")
+}
+
+
 function buyToCookList() {
   let missing = user.getAllMissingIngredients()
   let info = missing.reduce((output, item) => {
-    postUpdates(item);
+    postBoughtItems(item);
     let itemName = ingredientsData.find(ingredient => ingredient.id === item.id).name;
     return output + `\n${itemName}: ${item.needs} ${item.unit}`;
   }, 'Putting in an Order For:')
