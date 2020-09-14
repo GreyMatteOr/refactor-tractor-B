@@ -80,6 +80,26 @@ body {
     width: 100%;
   }
 
+  #add-cart {
+    background-color: #359567;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  #is-in-list {
+    background-color: #359567;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
+  }
+
   #search-input {
     background-color: $gray-green;
     background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
@@ -442,9 +462,10 @@ body {
     z-index:100;
   }
 
+
   .hidden {
     display: none;
   }
 }
 
-    @import "media-queries.scss";
+@import "media-queries.scss";
