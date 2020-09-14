@@ -17,6 +17,10 @@
       display: none;
     }
 
+		// h1 {
+		// 	margin-top: -.5em;
+		// }
+
     #search {
       display: none;
     }
@@ -24,8 +28,19 @@
       display: none;
     }
 
+		.banner-image {
+			height: 185px;
+		}
 		.main-title{
 			display: flex;
+		}
+
+		.hamburger {
+			display: flex;
+			background-color: $blue-gray-2;
+			border: none;
+			outline: none;
+			padding-left: 9em;
 		}
 
 		main {

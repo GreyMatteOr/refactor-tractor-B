@@ -338,6 +338,10 @@ body {
     background-color: $blue-gray-2;
   }
 
+  .hamburger {
+    display: none;
+  }
+
 
   /* PANTRY LIST */
   .drop-menu, .shopping-list {
@@ -405,7 +409,7 @@ body {
   #recipe-title {
     border-radius: 7px 7px 0px 0px;
     color: white;
-    font-size: 30px;
+    font-size: 23px;
     margin: 0;
     padding: 5%;
     text-align: center;

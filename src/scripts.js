@@ -1,12 +1,12 @@
 import $ from 'jquery';
 
-
 import './css/variables.scss';
 import './css/mixins.scss';
 import './css/index.scss';
 import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
+import goFetch from './fetch-requests.js'
 import {allRecipesBtn, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
 
 let ingredientsData;
@@ -32,23 +32,17 @@ searchForm.addEventListener("submit", pressEnterSearch);
 
 // RETRIEVE DATA
 function retrieveData() {
-  Promise.all([
-    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData'),
-    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData'),
-    fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-  ])
-    .then(responses => Promise.all(responses.map(response => response.json())))
-    .then(([u, i, r]) => {
-      users = u.wcUsersData;
-      ingredientsData = i.ingredientsData;
-      recipeData = r.recipeData.map(recipe => new Recipe(recipe))
-      // console.log(ingredientsData)
-      // console.log(recipeData)
-      createCards();
-      findTags();
-      generateUser();
-    })
-    .catch(err => console.log(err))
+  goFetch.getServerData()
+  .then(responses => Promise.all(responses.map(response => response.json())))
+  .then(([u, i, r]) => {
+    users = u.wcUsersData;
+    ingredientsData = i.ingredientsData;
+    recipeData = r.recipeData.map(recipe => new Recipe(recipe))
+    createCards();
+    findTags();
+    generateUser();
+  })
+  .catch(err => console.log(err))
 }
 
 // GENERATE A USER ON LOAD
@@ -158,22 +152,19 @@ function showSavedRecipes() {
 
 // CREATE RECIPE INSTRUCTIONS
 function openRecipeInfo(event) {
-  domUpdates.makeInline(fullRecipeInfo);
   let recipeId = event.path.find(e => e.id).id;
+  refreshRecipeCard(recipeId);
+}
+
+function refreshRecipeCard(recipeId) {
+  domUpdates.makeInline(fullRecipeInfo);
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   domUpdates.generateRecipeTitle(recipe, generateIngredients(recipe, ingredientsData), fullRecipeInfo, ingredientsData);
   domUpdates.addRecipeImage(recipe);
   domUpdates.generateInstructions(recipe, fullRecipeInfo);
   domUpdates.addOverlay(fullRecipeInfo);
-  let inInList = user.recipesToCook.includes(recipe);
-  fullRecipeInfo.innerHTML += `
-    <h4 id='list-title'></h4>
-    <button id='add-cart'>Add to Cart</button>
-  `;
-  let missingIngredients = checkPantryIngredients(recipe);
-  fullRecipeInfo.innerHTML += `
-    <button id='is-in-list'>${inInList ? `Remove from 'will-cook' list` : `Add to 'will-cook' list`}</button>
-  `;
+  let missingIngredients = user.pantry.findMissingIngredients(recipe);
+  domUpdates.addMissingIngredients(fullRecipeInfo, recipe, missingIngredients, ingredientsData, fullRecipeInfo, user);
   document.querySelector('#is-in-list').addEventListener('click', function() {
     toggleRecipeInList(recipe);
   });
@@ -185,34 +176,20 @@ function openRecipeInfo(event) {
       addIngredientsToList(all)
     };
   });
+  document.querySelector('#cook-it').addEventListener('click', function() {
+    cookRecipe(recipe);
+  });
 }
 
 function toggleRecipeInList(recipe) {
   let recipePosition = user.recipesToCook.findIndex(toCook => toCook.id === recipe.id)
   if (recipePosition === -1) {
-    document.querySelector('#is-in-list').innerText = `Remove from 'will-cook' list`;
+    domUpdates.changeText(document.querySelector('#is-in-list'), `Remove from 'will-cook' list`);
     user.recipesToCook.push(recipe)
   } else {
-    document.querySelector('#is-in-list').innerText = `Add to 'will-cook' list`;
+    domUpdates.changeText(document.querySelector('#is-in-list'), `Add to 'will-cook' list`);
     user.recipesToCook.splice(recipePosition, 1);
   }
-}
-
-function checkPantryIngredients(recipe) {
-  let missingIngredients = user.pantry.findMissingIngredients(recipe);
-  if (missingIngredients.length === 0) {
-    document.querySelector('#list-title').innerText = `You have everything you need to make this ${user.pantry.calculateTimesCanMake(recipe)} times!`;
-    document.querySelector('#add-cart').innerText = 'Add ingredients to make again to cart';
-  } else {
-    document.querySelector('#add-cart').innerText = 'Add to Cart';
-    document.querySelector('#list-title').innerText = 'The ingredients needed to make this recipe'
-    missingIngredients.forEach(ingredient => {
-      let ingredientName = ingredientsData.find(i => i.id == ingredient.id).name;
-      ingredient.name = ingredientName;
-      fullRecipeInfo.innerHTML += `<li class='missing-ingredient'>${ingredient.name}: ${ingredient.needs} ${ingredient.unit}</li>`;
-    });
-  }
-  return missingIngredients;
 }
 
 function addIngredientsToList(ingredients) {
@@ -221,7 +198,7 @@ function addIngredientsToList(ingredients) {
     if(currentAmount) currentAmount.needs += item.needs;
     else user.shoppingList = user.shoppingList.concat(item);
   })
-  document.querySelector('#list-title').innerText = 'Added to your shopping list!';
+  domUpdates.changeText(document.querySelector('#list-title'), 'Added to your shopping list!');
 }
 
 function generateIngredients(recipe) {
@@ -311,22 +288,46 @@ function findRecipesWithCheckedIngredients(selected) {
 }
 
 function buyCustomList() {
-  alert('bought!');
   document.querySelector(".buy-ingredient-list").innerHTML = '';
-  user.shoppingList.forEach(item => {
-    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] + item.needs);
-  });
+  postBuy(user.shoppingList)
   user.shoppingList = [];
 }
 
 function buyToCookList() {
   let missing = user.getAllMissingIngredients()
+  postBuy(missing);
   let info = missing.reduce((output, item) => {
-    user.pantry.stock[item.id] = (user.pantry.stock[item.id] === undefined ? item.needs : user.pantry.stock[item.id] + item.needs);
     let itemName = ingredientsData.find(ingredient => ingredient.id === item.id).name;
     return output + `\n${itemName}: ${item.needs} ${item.unit}`;
-  }, 'Bought:')
-  if(info === 'Bought:') info = 'You have everything you need!'
+  }, 'Putting in an Order For:')
+  if(info === 'Putting in an Order For:') info = 'You have everything you need!'
   alert(info);
-  document.querySelector(".buy-ingredient-list").innerHTML = '';
+}
+
+function cookRecipe(recipe) {
+  Promise.all(recipe.ingredients.map(ingredient => goFetch.post({id: ingredient.id, needs: -ingredient.quantity.amount}, user)))
+  .then(() => {
+    recipe.ingredients.forEach(item => {
+      console.log(item)
+      console.log(user.pantry.stock[item.id])
+      user.pantry.stock[item.id] -= item.quantity.amount;
+      console.log(user.pantry.stock[item.id])
+
+    })
+    domUpdates.exitRecipe(document.querySelector(".recipe-instructions"));
+    refreshRecipeCard(recipe.id);
+  })
+  .catch(() => domUpdates.changeText(document.querySelector("#cook-it"), "Oops! Looks like something went wrong! Try again in a bit."));
+}
+
+function postBuy(list) {
+  Promise.all(list.map(item => goFetch.post(item, user)))
+  .then(() => {
+    domUpdates.changeText(document.querySelector(".buy-ingredient-list"), 'Bought!')
+    list.forEach(item => {
+      let current = user.pantry.stock[item.id]
+      user.pantry.stock[item.id] = (current === undefined ? item.needs : current + item.needs)
+    })
+  })
+  .catch(() => domUpdates.changeText(document.querySelector(".buy-ingredient-list"), 'Oops! Looks like something went wrong! Try again in a bit.'))
 }
