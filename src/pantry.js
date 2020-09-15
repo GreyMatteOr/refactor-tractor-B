@@ -1,6 +1,6 @@
 class Pantry {
   constructor(stock = []) {
-    this.ingredients = stock;
+    this.ingredients = stock.sort((a, b) => a.id - b.id);
     this.stock = stock.reduce((inventory, item) => {
       inventory[item.ingredient] = (
         inventory[item.ingredient] === undefined
@@ -37,6 +37,10 @@ class Pantry {
       if(lowest !== null) return Math.min(lowest, timesCanMake)
       return timesCanMake;
     }, null);
+  }
+
+  update(){
+    this.ingredients.forEach(ing => ing.amount = this.stock[ing.ingredient])
   }
 }
 
