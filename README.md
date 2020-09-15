@@ -52,3 +52,11 @@ We encountered the need for testing before our scheduled lesson that taught thes
 ![functionality 1](https://giphy.com/gifs/IzuPzeGgUiKWEanJIE)
 
 ![functionality 2](https://giphy.com/gifs/dscc49iLbkp3CgKQyd)
+
+**Functionality**
+
+* This site is available in desktop and mobile view.
+* Users can mark their favorite recipes by selecting the apple icon on any recipe of their choice.
+* ARIA tags and thoughtful color choices have been implemented as needed to increase accessibility.
+* The search bar allows users to quickly find specific recipes.
+* By utilizing the pantry feature, users can easily see what recipes they can cook according to the ingredients in their personal pantry.
