@@ -1,5 +1,8 @@
 @import "mixins.scss";
 @import "variables.scss";
+html{
+  height: 100%;
+}
 
 body {
   background-color: $blue-gray-2;
@@ -10,7 +13,7 @@ body {
     "header header"
     "image image"
     "aside main";
-  height: 100vh;
+  height:min-content;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
@@ -19,7 +22,7 @@ body {
       align-self: center;
       color: white;
       font-family: "Sulphur Point", sans-serif;
-      font-size: 50px;
+      font-size: 45px;
       margin: 0%;
       padding: 0.5% 0.7% 0%;
       width: 70%;
@@ -163,8 +166,7 @@ body {
     overflow: hidden;
     text-align: center;
     transition: .4s ease;
-    width: 15%;
-
+    width: 33%;
     &:hover {
       color: $soft-green;
       font-size: 14px;
@@ -172,8 +174,6 @@ body {
       transition: .4s ease;
     }
   }
-
-
 
   .nav-btn img {
     max-height: 40px;
@@ -192,6 +192,13 @@ body {
   .ing-pan-btn {
     margin: 1% 0%;
     padding: 1px 6px 5px 0px;
+  }
+
+  .nav-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 20em;
   }
 
 
@@ -263,6 +270,7 @@ body {
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
+    height:min-content;
   }
 
   .recipe-card {
@@ -368,7 +376,7 @@ body {
     align-items: center;
     background-color: $silver;
     height: 600px;
-    margin-left: 81%;
+    right: 0;
     margin-top: 92px;
     overflow: scroll;
     padding: 12px;
@@ -460,6 +468,26 @@ body {
     top:0;
     width:100%;
     z-index:100;
+  }
+
+  #buy-btn {
+    background-color: #359567;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  #buy-user-list-btn {
+    background-color: #359567;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
   }
 
 
