@@ -1,17 +1,12 @@
-const chai = require('chai');
-
-const spies = require('chai-spies');
-chai.use(spies);
 import { expect } from 'chai';
+const chai = require('chai');
+const spies = require('chai-spies');
 import goFetch from '../src/fetch-requests.js'
 
-console.log(goFetch)
-//set up spies
-//need a fetch spy
-
 describe('post', function() {
-  it('should return a promise', function() {
-    console.log(goFetch);
+  console.log('here2');
+  it('should do a thing', function() {
+    console.log('here1');
     global.fetch = chai.spy(function() {
       return new Promise()
       });
@@ -29,7 +24,7 @@ describe('post', function() {
   })
 
   it('should run fetch once', function() {
-
+    expect('false').to.equal('false')
   })
 
   it('should call fetch with correct object and URl', function() {

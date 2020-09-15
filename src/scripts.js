@@ -10,7 +10,6 @@ import goFetch from './fetch-requests.js'
 import {allRecipesBtn, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
 
 let ingredientsData;
-let pantryInfo = [];
 let recipes = [];
 let recipeData;
 let users;
@@ -24,14 +23,15 @@ buyBtn.addEventListener('click', buyCustomList);
 buyUserListBtn.addEventListener('click', buyToCookList);
 filterBtn.addEventListener("click", findCheckedBoxes);
 main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", domUpdates.toggleMenu);
+pantryBtn.addEventListener("click", () => {
+  findPantryInfo();
+  domUpdates.toggleMenu()
+});
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-// hamburgerBtn.addEventListener('click', dropDownMobile)
-
 
 // RETRIEVE DATA
 function retrieveData() {
@@ -53,7 +53,6 @@ function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
   let firstName = user.name.split(" ")[0];
   domUpdates.greetUser(firstName);
-  findPantryInfo();
 }
 
 // CREATE RECIPE CARDS
@@ -207,7 +206,7 @@ function addIngredientsToList(ingredients) {
 function generateIngredients(recipe) {
   return recipe && recipe.ingredients.map(i => {
     let ingredientName = ingredientsData.find(ingredient => ingredient.id === i.id ).name;
-    return `${capitalize(ingredientName)} (${i.quantity.amount} ${i.quantity.unit})`
+    return `${capitalize(ingredientName)} (${Math.round(i.quantity.amount * 100) / 100} ${i.quantity.unit})`
   }).join(", ");
 }
 
@@ -240,9 +239,14 @@ function filterNonSearched(filtered) {
   domUpdates.hideRecipes(found);
 }
 
+function createRecipeObject(recipes) {
+  recipes = recipes.map(recipe => new Recipe(recipe));
+  return recipes
+}
 
 // CREATE AND USE PANTRY
 function findPantryInfo() {
+  let pantryInfo = [];
   user.pantry.ingredients.forEach(item => {
     let itemInfo = ingredientsData.find(ingredient => {
       return ingredient.id === item.ingredient;
@@ -254,7 +258,7 @@ function findPantryInfo() {
     });
     if (itemInfo && originalIngredient) {
       originalIngredient.count += item.amount;
-    } else if (itemInfo) {
+    } else if (itemInfo && item.amount > 0) {
       pantryInfo.push({name: itemInfo.name, count: item.amount});
     }
   });
@@ -311,12 +315,9 @@ function cookRecipe(recipe) {
   Promise.all(recipe.ingredients.map(ingredient => goFetch.post({id: ingredient.id, needs: -ingredient.quantity.amount}, user)))
   .then(() => {
     recipe.ingredients.forEach(item => {
-      console.log(item)
-      console.log(user.pantry.stock[item.id])
       user.pantry.stock[item.id] -= item.quantity.amount;
-      console.log(user.pantry.stock[item.id])
-
     })
+    user.pantry.update();
     domUpdates.exitRecipe(document.querySelector(".recipe-instructions"));
     refreshRecipeCard(recipe.id);
   })

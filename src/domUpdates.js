@@ -145,9 +145,10 @@ let domUpdates = {
   },
 
   displayPantryInfo(pantry) {
+    document.querySelector(".pantry-list").innerHTML = '';
     pantry.forEach(ingredient => {
       let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-        <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
+        <label for="${ingredient.name}">${ingredient.name}, ${Math.round(100 * ingredient.count) / 100}</label></li>`;
       document.querySelector(".pantry-list").insertAdjacentHTML("beforeend", ingredientHtml);
     });
   },

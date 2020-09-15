@@ -80,7 +80,7 @@ body {
     font-family: $quicksand;
     justify-content: center;
     margin: 1.2% 0.5% 1.2% 0%;
-    width: 100%;
+    width: max-content;
   }
 
   #add-cart {
@@ -139,10 +139,6 @@ body {
       font-size: 0px;
       transition: .8s ease;
     }
-  }
-
-  .search-label {
-    display: none;
   }
 
   .search-btn {
