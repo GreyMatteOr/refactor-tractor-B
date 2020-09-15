@@ -21,7 +21,7 @@ function makeSpy(toTest) {
   return spy;
 }
 var node;
-describe.only('Dom Update Object', function() {
+describe('Dom Update Object', function() {
   beforeEach(function () {
     global.document = {};
     node = {};

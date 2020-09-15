@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import Pantry from '../src/pantry';
 
-describe.only('Pantry', function() {
+describe('Pantry', function() {
   let recipe1, recipe2, pantry, stock, recipe;
 
   beforeEach(function() {

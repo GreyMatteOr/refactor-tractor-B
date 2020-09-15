@@ -1,10 +1,8 @@
+import { expect } from 'chai';
 const chai = require('chai');
 const chaiFetch = require('chai-fetch');
 const spies = require('chai-spies');
-chai.use(spies);
-import { expect } from 'chai';
 import goFetch from '../src/fetch-requests.js'
-
 
 describe('post', function() {
   it('should run fetch once', function() {
