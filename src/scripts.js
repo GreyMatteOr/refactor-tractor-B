@@ -7,7 +7,7 @@ import User from './user';
 import Recipe from './recipe';
 import domUpdates from './domUpdates.js'
 import goFetch from './fetch-requests.js'
-import {allRecipesBtn, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
+import {allRecipesBtn, banner, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
 
 let ingredientsData;
 let recipes = [];
@@ -32,6 +32,7 @@ searchBtn.addEventListener("click", searchRecipes);
 shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
+banner.addEventListener('click', toggleTags)
 
 // RETRIEVE DATA
 function retrieveData() {
@@ -334,4 +335,8 @@ function postBuy(list) {
     })
   })
   .catch(() => domUpdates.changeText(document.querySelector(".buy-ingredient-list"), 'Oops! Looks like something went wrong! Try again in a bit.'))
+}
+
+function toggleTags() {
+  document.querySelector('.recipe-type-bar').classList.toggle('mobile-hidden')
 }
