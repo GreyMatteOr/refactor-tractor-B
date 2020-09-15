@@ -7,7 +7,6 @@
 		display: flex;
 		flex-direction: column;
 
-
     aside {
       display: none;
     }
@@ -15,11 +14,10 @@
 		header {
 			display: flex;
 			flex-direction: column;
-			height: 20em;
 		}
 
-		h1 {
-			padding-bottom: .5em;
+		h1{
+		margin-top: .25em;
 		}
 
     #search {
@@ -35,9 +33,17 @@
 			flex-direction: row;
 		}
 
-		.banner-image {
-			height: 185px;
+		.welcome-msg {
+			margin:auto;
+			padding-bottom: .325em;
 		}
+
+		.banner-image {
+			width: 100%;
+			height: auto;
+			margin-top: .25em;
+		}
+
 		.main-title{
 			display: flex;
 		}
@@ -48,15 +54,6 @@
 			border: none;
 			outline: none;
 			padding-left: 9em;
-		}
-
-		.hidden {
-
-			display: none!important;
-		}
-
-		main {
-			height: 100vh;
 		}
 
 		.menu-button,
@@ -121,18 +118,7 @@
 		}
 
 		.drop-menu {
-			display: none;
-			position: absolute;
-			align-items: center;
-			background-color: #DAE4EE;
-			height: 600px;
-			width: 229px;
-			overflow: scroll;
-			padding: 15px;
-			text-align: center;
-			z-index: 3;
-			top: 30%;
-			right: 26%;
+			right:auto;
 		}
 
 		#post-to-pantry {
