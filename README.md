@@ -39,19 +39,19 @@ We encountered the need for testing before our scheduled lesson that taught thes
 
 ## Installation
 
-* Clone down the repo at: https://github.com/GreyMatteOr/refactor-tractor-B  
-* You can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): git clone https://github.com/GreyMatteOr/refactor-tractor-B.git [what you want to name the repo]
-* Then install the library dependencies. Switch into your new directory & run: npm install in the terminal.
-* To verify that it is setup correctly, run npm start in your terminal. Go to http://localhost:8080/ in the browser to visit the deployed application.
+1. Clone down the repo at: https://github.com/GreyMatteOr/refactor-tractor-B  
+2. You can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): git clone https://github.com/GreyMatteOr/refactor-tractor-B.git [what you want to name the repo]
+3. Then install the library dependencies. Switch into your new directory & run: npm install in the terminal.
+4. To verify that it is setup correctly, run npm start in your terminal. Go to http://localhost:8080/ in the browser to visit the deployed application.
 
 
 ## In Action
 
 **What's Cookin' Dashboard**
 
-![functionality 1](https://giphy.com/gifs/IzuPzeGgUiKWEanJIE)
+![functionality 1](https://media.giphy.com/media/IzuPzeGgUiKWEanJIE/source.mov)
 
-![functionality 2](https://giphy.com/gifs/dscc49iLbkp3CgKQyd)
+![functionality 2](https://media.giphy.com/media/dscc49iLbkp3CgKQyd/source.mov)
 
 
 **Functionality**
