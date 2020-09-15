@@ -47,9 +47,9 @@ We encountered the need for testing before our scheduled lesson that taught thes
 
 **What's Cookin' Dashboard**
 
-![functionality 1](https://media.giphy.com/media/IzuPzeGgUiKWEanJIE/source.mov)
+![](https://media4.giphy.com/media/IzuPzeGgUiKWEanJIE/giphy.gif)
 
-![functionality 2](https://media.giphy.com/media/dscc49iLbkp3CgKQyd/source.mov)
+![](https://media0.giphy.com/media/dscc49iLbkp3CgKQyd/giphy.gif)
 
 
 **Functionality**
