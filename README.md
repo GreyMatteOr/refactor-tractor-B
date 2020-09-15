@@ -2,11 +2,9 @@
 
 **Contributors**
 
-[Matthew Lane](https://github.com/GreyMatteOr)
-
-[Kathryn Jackson](https://github.com/kathrynljackson)
-
-[Katy St Sauveur](https://github.com/krogowsk531)
+* [Matthew Lane](https://github.com/GreyMatteOr)
+* [Kathryn Jackson](https://github.com/kathrynljackson)
+* [Katy St Sauveur](https://github.com/krogowsk531)
 
 
 ## Abstract
