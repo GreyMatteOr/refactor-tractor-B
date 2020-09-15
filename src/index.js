@@ -14,5 +14,5 @@ import './images/cookbook.png';
 import './images/seasoning.png';
 import "./images/apple-logo-outline.png";
 import "./images/shopping-cart-icon.png";
-
+import './images/down-arrow.png'
 console.log('This is the JavaScript entry file - your code begins here.');
