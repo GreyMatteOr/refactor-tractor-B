@@ -2,7 +2,7 @@ let domUpdates = {
   greetUser(firstName) {
     let welcomeMsg = `
       <div class="welcome-msg">
-        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down-arrow.png'/>
+        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down_arrow.png'/>
         <h1>Welcome ${firstName}!</h1>
       </div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin", welcomeMsg);
