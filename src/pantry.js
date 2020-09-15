@@ -8,11 +8,10 @@ class Pantry {
         : inventory[item.ingredient] + item.amount
       );
       return inventory;
-    }, {});
+      }, {});
   }
 
   findMissingIngredients(recipe = []) {
-    if (!Array.isArray) throw 'Needs to be an Array';
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
@@ -40,7 +39,18 @@ class Pantry {
   }
 
   update(){
-    this.ingredients.forEach(ing => ing.amount = this.stock[ing.ingredient])
+    Object.keys(this.stock).forEach(ingID => {
+      let exists = this.ingredients.find(item => item.ingredient === +ingID);
+      if (exists) exists.amount = this.stock[ingID];
+      else {
+        let newIng = {
+          "ingredient": +ingID,
+          "amount": this.stock[ingID]
+        }
+        this.ingredients.push(newIng);
+      }
+    })
+    this.ingredients.sort((a, b) => a.id - b.id);
   }
 }
 
