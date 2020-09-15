@@ -53,6 +53,7 @@ We encountered the need for testing before our scheduled lesson that taught thes
 
 ![functionality 2](https://giphy.com/gifs/dscc49iLbkp3CgKQyd)
 
+
 **Functionality**
 
 * This site is available in desktop and mobile view.
