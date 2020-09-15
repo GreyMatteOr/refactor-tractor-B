@@ -5,6 +5,7 @@ import './css/mixins.scss';
 import './css/index.scss';
 import User from './user';
 import Recipe from './recipe';
+import Pantry from './pantry';
 import domUpdates from './domUpdates.js'
 import goFetch from './fetch-requests.js'
 import {allRecipesBtn, banner, buyBtn, buyUserListBtn, filterBtn, fullRecipeInfo, main, pantryBtn, savedRecipesBtn, searchBtn, searchForm, searchInput, shoppingList, showPantryRecipes, tagList} from './dom-loader';
@@ -176,6 +177,7 @@ function refreshRecipeCard(recipeId) {
     else {
       let emptyPantry = new Pantry();
       let all = emptyPantry.findMissingIngredients(recipe);
+      console.log(all)
       addIngredientsToList(all)
     };
   });
@@ -199,7 +201,10 @@ function addIngredientsToList(ingredients) {
   ingredients.forEach(item => {
     let currentAmount = user.shoppingList.find(i => i.id === item.id);
     if(currentAmount) currentAmount.needs += item.needs;
-    else user.shoppingList = user.shoppingList.concat(item);
+    else {
+      item.name = ingredientsData.find(i => i.id === item.id).name;
+      user.shoppingList = user.shoppingList.concat(item)
+    };
   })
   domUpdates.changeText(document.querySelector('#list-title'), 'Added to your shopping list!');
 }

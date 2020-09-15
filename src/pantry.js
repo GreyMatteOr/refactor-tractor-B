@@ -12,7 +12,6 @@ class Pantry {
   }
 
   findMissingIngredients(recipe = []) {
-    if (!Array.isArray) throw 'Needs to be an Array';
     let stillNeed = recipe.ingredients.filter((food) => {
       return !(this.stock[food.id] >= food.quantity.amount)
     });
