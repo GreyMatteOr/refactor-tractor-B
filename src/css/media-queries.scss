@@ -7,10 +7,6 @@
 		display: flex;
 		flex-direction: column;
 
-    aside {
-      display: none;
-    }
-
 		header {
 			display: flex;
 			flex-direction: column;
@@ -24,9 +20,6 @@
       align-self: center;
 			width: 80%;
     }
-    // .nav-btn {
-    //   display: none;
-    // }
 
 		.nav-buttons {
 			display: flex;
@@ -36,6 +29,14 @@
 		.welcome-msg {
 			margin:auto;
 			padding-bottom: .325em;
+			align-items: center;
+		}
+
+		#tag-toggle {
+			display: inline;
+			width: auto;
+			height: 45px;
+			padding-top:13px;
 		}
 
 		.banner-image {
@@ -149,14 +150,4 @@
     opacity: 40%;
     width: 100%;
 	}
-
-.recipe-type-bar {
-  display: none;
-}
-
-
-
-// .search-btn {
-//   display: none;
-// }
 }
