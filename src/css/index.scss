@@ -470,6 +470,26 @@ body {
     z-index:100;
   }
 
+  #buy-btn {
+    background-color: #359567;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  #buy-user-list-btn {
+    background-color: #359567;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    outline: none;
+    margin: 5px;
+    padding: 5px;
+  }
+
 
   .hidden {
     display: none;
