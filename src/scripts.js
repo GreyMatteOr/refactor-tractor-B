@@ -333,6 +333,7 @@ function postBuy(list) {
       let current = user.pantry.stock[item.id]
       user.pantry.stock[item.id] = (current === undefined ? item.needs : current + item.needs)
     })
+    user.pantry.update();
   })
   .catch(() => domUpdates.changeText(document.querySelector(".buy-ingredient-list"), 'Oops! Looks like something went wrong! Try again in a bit.'))
 }
