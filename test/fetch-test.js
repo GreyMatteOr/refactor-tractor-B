@@ -1,21 +1,28 @@
 const chai = require('chai');
-
+const chaiFetch = require('chai-fetch');
 const spies = require('chai-spies');
 chai.use(spies);
 import { expect } from 'chai';
 import goFetch from '../src/fetch-requests.js'
 
-console.log(goFetch)
-//set up spies
-//need a fetch spy
 
 describe('post', function() {
-  it('should return a promise', function() {
-    console.log(goFetch);
-    global.fetch = chai.spy(function() {
-      return new Promise()
-      });
+  it('should run fetch once', function() {
+    global.fetch = chai.spy(() => {});
+    let item = {
+      id: '',
+      needs: ''
+    }
 
+    let user = {
+      id: ''
+    }
+    goFetch.post(item, user);
+    expect(fetch).to.have.been.called.once;
+  })
+
+  it('should call fetch with correct object and URl', function() {
+    global.fetch = chai.spy(() => {});
     let item = {
       id: '',
       needs: ''
@@ -25,15 +32,22 @@ describe('post', function() {
       id: ''
     }
 
-    expect(goFetch.post(item, user)).to.be.an.instanceOf(Promise);
-  })
+    let data = {
+      "userID": user.id,
+      "ingredientID": item.id,
+      "ingredientModification": item.needs
+    }
 
-  it('should run fetch once', function() {
+    let update = JSON.stringify(data);
 
-  })
-
-  it('should call fetch with correct object and URl', function() {
-
+    goFetch.post(item, user);
+    expect(fetch).to.have.been.called.with('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+        method: 'POST',
+        body: update,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
   })
 })
 
@@ -43,6 +57,9 @@ describe('getServerData', function() {
   })
 
   it('should run fetch three times', function() {
+    global.fetch = chai.spy(() => {});
 
+    goFetch.getServerData();
+    expect(fetch).to.have.been.called.exactly(3);
   })
 })
