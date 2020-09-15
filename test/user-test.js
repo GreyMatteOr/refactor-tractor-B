@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import User from '../src/user';
+import Pantry from '../src/pantry'
 
 describe('User', function() {
   let user;
@@ -23,7 +24,7 @@ describe('User', function() {
         ]
       },
     ]
-    
+
     let userData = sampleUserData[0];
     user = new User(userData)
     recipes = [
@@ -286,9 +287,10 @@ describe('User', function() {
   it('should take in the user\'s data as an argument', () => {
     expect(user.id).to.equal(1);
     expect(user.name).to.equal('Saige O\'Kon');
-    expect(user.pantry[0].ingredient).to.equal(11477);
+    expect(user.pantry).to.be.an.instanceOf(Pantry);
     expect(user.favoriteRecipes).to.deep.equal([]);
     expect(user.recipesToCook).to.deep.equal([]);
+    expect(user.shoppingList).to.deep.equal([]);
   });
 
   it('should be able to add a recipe to favoriteRecipes', () => {
