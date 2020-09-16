@@ -481,6 +481,10 @@ body {
     @include buy-buttons
   }
 
+  #cook-it {
+    @include buy-buttons
+  }
+
 
   .hidden {
     display: none;
