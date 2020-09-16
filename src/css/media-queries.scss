@@ -8,7 +8,7 @@
 			flex-direction: column;
 		}
 
-		h1{
+		h1 {
 		margin-top: .25em;
 		}
 
@@ -27,22 +27,22 @@
 		}
 
 		.welcome-msg {
+			align-items: center;
 			margin:auto;
 			padding-bottom: .325em;
-			align-items: center;
 		}
 
 		#tag-toggle {
 			display: inline;
-			width: auto;
 			height: 45px;
 			padding-top:13px;
+			width: auto;
 		}
 
 		.banner-image {
-			width: 100%;
 			height: auto;
 			margin-top: .25em;
+			width: 100%;
 		}
 
 		.main-title{
@@ -50,9 +50,9 @@
 		}
 
 		.hamburger {
-			display: flex;
 			background-color: $blue-gray-2;
 			border: none;
+			display: flex;
 			outline: none;
 			padding-left: 9em;
 		}
@@ -60,11 +60,11 @@
 		.menu-button,
 		.menu-close,
 		.feather {
+			color: #fff;
+			height: 5vh;
 			position: absolute;
 			right: 0px;
 			top: 0px;
-			height: 5vh;
-			color: #fff;
 		}
 
 		.mobile-buttons {
@@ -75,8 +75,8 @@
 		.mobile-menu {
 			display: flex!important;
 			height: 100px;
-			z-index: 2;
 			position: relative;
+			z-index: 2;
 		}
 
 		.open-style {
@@ -88,9 +88,9 @@
 
 		#mobile-search {
 			display: flex;
-			min-width: 300px;
-			max-width: 450px;
 			margin: 0 auto;
+			max-width: 450px;
+			min-width: 300px;
 			.mobile-nav-btn {
 				margin: 0 auto;
 			}
@@ -103,12 +103,12 @@
 		.menu-body-style {
 			display: flex;
 			flex-direction: column;
-			justify-content: space-around;
 			height: 350px;
+			justify-content: space-around;
 			.saved-ingredients-btn,
 			.saved-recipes-to-cook {
-				padding: 5px;
 				border-left: none;
+				padding: 5px;
 			}
 		}
 
@@ -126,21 +126,19 @@
 			width: 75%;
 		}
 
-
-
 		.mobile-aside {
-			display: flex;
-			justify-content: center;
-			height: 0px;
-			text-align: center;
 			background: white;
+			display: flex;
+			height: 0px;
+			justify-content: center;
+			text-align: center;
 			.mobile-wrap {
-				position: relative;
-				z-index: 2;
-				width: 200px;
-				height: 520px;
 				background: white;
+				height: 520px;
+				position: relative;
 				top: 43%;
+				width: 200px;
+				z-index: 2;
 			}
 		}
 	}
