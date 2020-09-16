@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="description" content="A website that collects recipes to eventually cook and store in a pantry that is full of ingredients.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fresh Picks</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link rel="stylesheet" type="text/scss" href="./css/index.scss">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
-    <link rel="icon" href="./images/apple-logo.png"/>
-    <link rel="icon" href="./images/search.png"/>
-    <link rel="icon" href="./images/cookbook.png"/>;
-    <link rel="icon" href="./images/seasoning.png"/>;
-    <link rel="icon" href="./images/apple-logo-outline.png"/>
-    <link rel="icon" href="./images/menu.png"/>
+    <link rel="icon" href="./images/apple-logo.png" alt="image of an apple"/>
+    <link rel="icon" href="./images/search.png" alt="image of a magnifying glass"/>
+    <link rel="icon" href="./images/cookbook.png" alt="image of a cookbook"/>
+    <link rel="icon" href="./images/seasoning.png" alt="image of a list"/>
+    <link rel="icon" href="./images/apple-logo-outline.png" alt="outline image of an apple"/>
+    <link rel="icon" href="./images/shopping-cart-icon.png" alt="image of a shopping cart"/>
+    <link rel="icon" href='./images/down-arrow.png' alt="down arrow menu icon"/>
   </head>
-  <body>
+  <body role="main" aria-label="">
     <header>
       <h1><span>fresh</span>Picks<img src="./images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
       <form id="search" role="search">
-        <input id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
-        <label for="search-input" class="search-label">Search</label>
+        <label id="search-area" for="search-input" class="search-label">
+          <label id="lbl-main-menu-mob"></label>
+          <input id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..." role="searchbox" name="search-input">
+        </input>
+        </label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="./images/search.png" alt="search button"></button>
       </form>
-      <button class="nav-btn ing-pan-btn saved-recipes-btn" type="button" name="button"><img src="./images/cookbook.png" alt="search button">My Recipes</button>
-      <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="./images/seasoning.png" alt="search button">My Pantry</button>
+      <div class="nav-buttons">
+        <button class="nav-btn my-list-btn ing-pan-btn" type="button" name="button">
+          <img src="./images/shopping-cart-icon.png" alt="shopping List button">
+          Shopping List
+        </button>
+        <button class="nav-btn ing-pan-btn saved-recipes-btn" type="button" name="button">
+          <img src="./images/cookbook.png" alt="search button">
+          My Recipes
+        </button>
+        <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button">
+          <img src="./images/seasoning.png" alt="search button">
+          My Pantry
+        </button>
+      </div>
     </header>
     <section class="banner-image">
       <section class="my-recipes-banner">
@@ -30,13 +47,19 @@
         <button class="show-all-btn">Show All Recipes</button>
       </section>
     </section>
-    <section class="drop-menu">
+    <section class="shopping-list hidden">
+      <h2>Shopping List</h2>
+      <button id="buy-btn">Buy from AmazonFRESH</button>
+      <button id="buy-user-list-btn">Buy Everything Needed to make current Recipes</button>
+      <ul class="buy-ingredient-list"></ul>
+    </section>
+    <section class="drop-menu hidden">
       <h2>My Pantry</h2>
       <button class="show-pantry-recipes-btn">What Can I Make that includes...?</button>
       <ul class="pantry-list"></ul>
     </section>
     <aside>
-      <section class="wrap">
+      <section class="recipe-type-bar mobile-hidden">
         <h2>Recipe Type</h2>
         <ul class="tag-list">
         </ul>
@@ -46,11 +69,11 @@
     <main>
       <section class="recipe-instructions">
       </section>
-      <div class="my-recipes-banner">
+      <section class="my-recipes-banner">
         <h1>My Recipes</h1>
         <button class="show-all-btn">Show All Recipes</button>
       </section>
     </main>
-    <script type="text/javascript" src="main.bundle.js"></script>
-  </body>
+  </body
 </html>
+<script type="text/javascript" src="main.bundle.js"></script>
