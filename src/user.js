@@ -27,22 +27,22 @@ class User {
   filterFavoriteRecipes(type) {
     let filteredFavorites = this.favoriteRecipes.filter(recipe => {
       return recipe.tags.includes(type);
-  })
-  return filteredFavorites;
+    })
+    return filteredFavorites;
   }
 
   filterRecipesToCook(type) {
     let filteredtoCook = this.recipesToCook.filter(recipe => {
       return recipe.tags.includes(type);
-  })
-  return filteredtoCook;
- }
+    })
+    return filteredtoCook;
+  }
 
   searchSavedRecipes(keyword) {
     let filteredSavedRecipes = this.favoriteRecipes.filter(recipe => {
       return recipe.name.includes(keyword) || recipe.ingredients.some(ingredient => ingredient.name.includes(keyword));
-  })
-  return filteredSavedRecipes;
+    })
+    return filteredSavedRecipes;
   }
 
   getAllMissingIngredients() {
@@ -51,8 +51,11 @@ class User {
       let missing = this.pantry.findMissingIngredients(recipe);
       missing.forEach(ingredient => {
         let current = output.find(i => i.id === ingredient.id);
-        if (current === undefined) output.push(ingredient);
-        else current.needs += ingredient.needs;
+        if (current === undefined) {
+          output.push(ingredient);
+        } else {
+          current.needs += ingredient.needs;
+        }
       });
     });
     return output;

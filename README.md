@@ -54,7 +54,7 @@ We encountered the need for testing before our scheduled lesson that taught thes
 ![functionality 2](https://giphy.com/gifs/dscc49iLbkp3CgKQyd)
 
 ![mobile view](https://media0.giphy.com/media/ienozjUiQZyAONPhoD/giphy.gif)
-)
+
 
 
 **Functionality**
