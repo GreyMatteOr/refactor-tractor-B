@@ -1,11 +1,13 @@
 @import "mixins.scss";
 @import "variables.scss";
+@import "media-queries.scss";
+
 html{
   height: 100%;
 }
 
 body {
-  background-color: $blue-gray-2;
+  background-color: $background-blue;
   display: grid;
   font-family: $quicksand;
   grid-template-columns: 1fr 5fr;
@@ -29,12 +31,12 @@ body {
     }
 
     h2 {
-      color: $dark-lime-green;
+      color: $green-title-font;
       margin: 10px 0px 10px 0px;
     }
 
     h3 {
-      color: $dark-lime-green;
+      color: $green-title-font;
       cursor: pointer;
       height: 17%;
       margin: 5px 5px 10px 0px;
@@ -43,7 +45,7 @@ body {
 
     h4 {
       color: $white;
-      background-color: $blue-gray-2;
+      background-color: $background-blue;
       border-radius: 3px;
       margin: 10px 0px 0px 0px;
       padding: 1px 4px 1px 4px;
@@ -61,7 +63,7 @@ body {
   }
 
   span {
-    color: $soft-green;
+    color: $border-hover-green;
     font-weight: 400;
   }
 
@@ -73,8 +75,8 @@ body {
 
   #search {
     border-radius: 15px 15px 15px 15px;
-    border: 3px outset $soft-green;
-    box-shadow: 0px 0px 7px 0px $blue-gray-3;
+    border: 3px outset $border-hover-green;
+    box-shadow: 0px 0px 7px 0px $searchbar;
     display: flex;
     flex-direction: row;
     font-family: $quicksand;
@@ -104,12 +106,12 @@ body {
   }
 
   #search-input {
-    background-color: $gray-green;
+    //background-color: $gray-green;
     background: -webkit-gradient( linear,left top, left bottom, color-stop(0, rgb(255, 255, 255)), color-stop(1, rgb(225,225,225)));
     border-radius: 10px 0px 0px 10px;
     border: none;
-    box-shadow: inset -3px -1px 20px 1px $blue-gray;
-    color: $blue-gray-2;
+    box-shadow: inset -3px -1px 20px 1px $box-shadow-blue;
+    color: $background-blue;
     font-family: $quicksand;
     font-size: 42px;
     height: 100%;
@@ -129,7 +131,7 @@ body {
     }
 
     &::placeholder {
-      color: $blue-gray-2;
+      color: $background-blue;
       font-size: 20px;
       text-align: right;
       text-shadow: none;
@@ -142,14 +144,14 @@ body {
   }
 
   .search-btn {
-    border-left: 3px outset $soft-green;
+    border-left: 3px outset $border-hover-green;
     border-radius: 0px 15px 15px 0px;
     padding: 1%;
   }
 
   .nav-btn {
     align-items: center;
-    background: $blue-gray-2 no-repeat;
+    background: $background-blue no-repeat;
     border: none;
     cursor: pointer;
     display: flex;
@@ -164,7 +166,7 @@ body {
     transition: .4s ease;
     width: 33%;
     &:hover {
-      color: $soft-green;
+      color: $border-hover-green;
       font-size: 14px;
       text-shadow: 0px 2px 4px black;
       transition: .4s ease;
@@ -178,11 +180,11 @@ body {
   }
 
   .saved-ingredients-btn {
-    border-left: 3px solid $soft-green;
+    border-left: 3px solid $border-hover-green;
   }
 
   .saved-recipes-btn {
-    border-left: 3px solid $soft-green;
+    border-left: 3px solid $border-hover-green;
   }
 
   .ing-pan-btn {
@@ -277,7 +279,7 @@ body {
 
   .recipe-card {
     background-color: white;
-    border: 2px solid $soft-green;
+    border: 2px solid $border-hover-green;
     border-radius: 7px;
     cursor: pointer;
     height: 270px;
@@ -298,7 +300,7 @@ body {
     }
 
     &:hover h3 {
-      text-shadow: 0px 0px 4px $soft-green;
+      text-shadow: 0px 0px 4px $border-hover-green;
       transition: .8s ease;
     }
   }
@@ -331,7 +333,7 @@ body {
   }
 
   .text {
-    background: $dark-lime-green;
+    background: $green-title-font;
     color: white;
     font-weight: 700;
     font-size: 0px;
@@ -359,13 +361,13 @@ body {
 
   .filter-btn {
     &:hover {
-      background-color: $blue-gray-2;
+      background-color: $background-blue;
     }
     @include buttons;
   }
 
   .filter-btn {
-    background-color: $blue-gray-2;
+    background-color: $background-blue;
   }
 
   .hamburger {
@@ -376,7 +378,7 @@ body {
   /* PANTRY LIST */
   .drop-menu, .shopping-list {
     align-items: center;
-    background-color: $silver;
+    background-color: $menu-silver;
     height: 600px;
     right: 0;
     margin-top: 92px;
@@ -388,7 +390,7 @@ body {
     z-index: 3;
 
     h2 {
-      color: $dark-lime-green;
+      color: $green-title-font;
       margin: 0px;
     }
 
@@ -403,7 +405,7 @@ body {
   /* RECIPE INSTRUCTIONS */
   .recipe-instructions {
     background: white;
-    border: 3px solid $soft-green;
+    border: 3px solid $border-hover-green;
     border-radius: 10px;
     box-shadow: 1px 1px 115px black;
     display: none;
@@ -420,9 +422,9 @@ body {
 
   #exit-recipe-btn {
     background: white;
-    border: 2px double $dark-lime-green;
+    border: 2px double $green-title-font;
     border-radius: 5px;
-    color: $dark-lime-green;
+    color: $green-title-font;
     cursor: pointer;
     font-size: 20px;
     font-weight: 700;
@@ -431,7 +433,7 @@ body {
     transition: .3s ease;
 
     &:hover {
-      background: $soft-green;
+      background: $border-hover-green;
       transition: .3s ease;
     }
   }
@@ -449,7 +451,7 @@ body {
 
   .recipe-instructions h4 {
     background: white;
-    color: $dark-lime-green;
+    color: $green-title-font;
   }
 
   .recipe-instructions p {
@@ -462,7 +464,7 @@ body {
 
   #overlay {
     filter:alpha(opacity=50);
-    background-color: $blue-gray-2;
+    background-color: $background-blue;
     height:100%;
     left:0;
     opacity:0.5;
@@ -473,23 +475,15 @@ body {
   }
 
   #buy-btn {
-    background-color: #359567;
-    border: none;
-    border-radius: 4px;
-    color: #FFFFFF;
-    outline: none;
-    margin: 5px;
-    padding: 5px;
+    @include buy-buttons
   }
 
   #buy-user-list-btn {
-    background-color: #359567;
-    border: none;
-    border-radius: 4px;
-    color: #FFFFFF;
-    outline: none;
-    margin: 5px;
-    padding: 5px;
+    @include buy-buttons
+  }
+
+  #cook-it {
+    @include buy-buttons
   }
 
 
@@ -497,5 +491,3 @@ body {
     display: none;
   }
 }
-
-@import "media-queries.scss";
