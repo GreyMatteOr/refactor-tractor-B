@@ -57,7 +57,7 @@ describe('Dom Update Object', function() {
 
       babySpy('Batilba');
       expect(babySpy.calls).to.equal(2);
-      expect(babySpy.calledWith).to.deep.equal([['Gertrude'],['Batilba']]);
+      expect(babySpy.calledWith).to.deep.equal([['Gertrude'], ['Batilba']]);
     });
   });
 
@@ -226,25 +226,25 @@ describe('Dom Update Object', function() {
 
   describe('addOverlay', function() {
     it('should add text', function () {
-    let overlaySpy = makeSpy(domUpdates.addOverlay)
-    overlaySpy(node);
+      let overlaySpy = makeSpy(domUpdates.addOverlay)
+      overlaySpy(node);
 
-    expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
+      expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
     })
 
     it('should be called once', function () {
-    let overlaySpy = makeSpy(domUpdates.addOverlay)
-    overlaySpy(node);
+      let overlaySpy = makeSpy(domUpdates.addOverlay)
+      overlaySpy(node);
 
-    expect(node.insertAdjacentHTML.calls).to.equal(1);
+      expect(node.insertAdjacentHTML.calls).to.equal(1);
     })
 
     it('should be called with beforebegin and end of the div', function () {
-    let overlaySpy = makeSpy(domUpdates.addOverlay)
-    overlaySpy(node);
+      let overlaySpy = makeSpy(domUpdates.addOverlay)
+      overlaySpy(node);
 
-    expect(node.insertAdjacentHTML.calledWith[0][0]).to.equal("beforebegin");
-    expect(node.insertAdjacentHTML.calledWith[0][1]).to.equal("<section id='overlay'></div>");
+      expect(node.insertAdjacentHTML.calledWith[0][0]).to.equal("beforebegin");
+      expect(node.insertAdjacentHTML.calledWith[0][1]).to.equal("<section id='overlay'></div>");
     })
   })
 
@@ -259,13 +259,13 @@ describe('Dom Update Object', function() {
       <h4>Ingredients</h4>
       <p></p>`;
 
-        let recipe = new Recipe({
-          id: '',
-          name: '',
-          image: '',
-          ingredients: [],
-          tags: ['']
-        })
+      let recipe = new Recipe({
+        id: '',
+        name: '',
+        image: '',
+        ingredients: [],
+        tags: ['']
+      })
 
       titleSpy(recipe, '', node, '');
       expect(node.insertAdjacentHTML.calledWith[0]).to.deep.equal(['beforeend', testString]);
@@ -296,7 +296,7 @@ describe('Dom Update Object', function() {
         ingredients: [],
         tags: ['']
       })
-        let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
+      let titleSpy = makeSpy(domUpdates.generateRecipeTitle);
       titleSpy(recipe, '', node, '');
       expect(node.insertAdjacentHTML.returned).to.deep.equal(['KJ']);
     })
@@ -329,7 +329,7 @@ describe('Dom Update Object', function() {
   })
 
   describe('generateInstructions', function () {
-    it('should run once for each step in the recipe', function(){
+    it('should run once for each step in the recipe', function() {
       let recipeSpy = makeSpy(domUpdates.generateInstructions);
       let recipe = new Recipe({
         id: '',
@@ -354,7 +354,7 @@ describe('Dom Update Object', function() {
       expect(node.insertAdjacentHTML.calls).to.equal(2);
     })
 
-    it('should be called with beforeend', function(){
+    it('should be called with beforeend', function() {
       let recipeSpy = makeSpy(domUpdates.generateInstructions);
       let recipe = new Recipe({
         id: '',
@@ -381,15 +381,15 @@ describe('Dom Update Object', function() {
     })
   })
 
-  describe('showMyRecipesBanner', function(){
-    it('should run twice', function(){
+  describe('showMyRecipesBanner', function() {
+    it('should run twice', function() {
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it('should be called with classes', function(){
+    it('should be called with classes', function() {
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
@@ -397,7 +397,7 @@ describe('Dom Update Object', function() {
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
 
-    it('should alter display type', function(){
+    it('should alter display type', function() {
       let bannerSpy = makeSpy(domUpdates.showMyRecipesBanner);
 
       bannerSpy();
@@ -405,15 +405,15 @@ describe('Dom Update Object', function() {
     })
   })
 
-  describe('showWelcomeBanner', function(){
-    it('should run twice', function(){
+  describe('showWelcomeBanner', function() {
+    it('should run twice', function() {
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
       expect(global.document.querySelector.calls).to.equal(2);
     })
 
-    it('should be called with classes', function(){
+    it('should be called with classes', function() {
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
@@ -421,7 +421,7 @@ describe('Dom Update Object', function() {
       expect(global.document.querySelector.calledWith[1]).to.deep.equal([".my-recipes-banner"]);
     })
 
-    it('should alter display type', function(){
+    it('should alter display type', function() {
       let bannerSpy = makeSpy(domUpdates.showWelcomeBanner);
 
       bannerSpy();
@@ -429,17 +429,17 @@ describe('Dom Update Object', function() {
     })
   })
 
-  describe('showAllRecipes', function(){
-    it('should run once for each recipe', function(){
+  describe('showAllRecipes', function() {
+    it('should run once for each recipe', function() {
       let showAllSpy = makeSpy(domUpdates.showAllRecipes);
       let recipes = [{
         id: '1',
         name: '11',
-        },
-        {
+      },
+      {
         id: '2',
         name: '22'
-        }]
+      }]
 
       showAllSpy(recipes);
       expect(document.getElementById.calls).to.equal(2);
@@ -450,67 +450,67 @@ describe('Dom Update Object', function() {
       let recipes = [{
         id: '1',
         name: '11',
-        }]
+      }]
       showAllSpy(recipes);
       expect(global.document.querySelector.calls).to.equal(2);
     })
   })
 
-  describe('displayPantryInfo', function(){
-      it('should run for each ingredient in the pantry', function(){
-        let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
-        let pantry = ['flour', 'egg', 'salt'];
+  describe('displayPantryInfo', function() {
+    it('should run for each ingredient in the pantry', function() {
+      let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
+      let pantry = ['flour', 'egg', 'salt'];
 
-        pantrySpy(pantry);
-        expect(global.document.querySelector.calls).to.equal(3);
-      })
+      pantrySpy(pantry);
+      expect(global.document.querySelector.calls).to.equal(3);
+    })
 
-      it('should add to the pantry list for each ingredient in the pantry', function(){
-        let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
-        let pantry = [{
-          name: 'flour',
-          count: 1}
-          ,{
-            name: 'egg',
-            count: 2},
-            {
-            name: 'salt',
-            count: 3
-            }
-          ];
-          let ingredient = pantry[1];
-          let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
+    it('should add to the pantry list for each ingredient in the pantry', function() {
+      let pantrySpy = makeSpy(domUpdates.displayPantryInfo);
+      let pantry = [{
+        name: 'flour',
+        count: 1}
+      , {
+        name: 'egg',
+        count: 2},
+      {
+        name: 'salt',
+        count: 3
+      }
+      ];
+      let ingredient = pantry[1];
+      let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
         <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
 
-        pantrySpy(pantry);
-        expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
-      })
+      pantrySpy(pantry);
+      expect(node.insertAdjacentHTML.calledWith[1]).to.deep.equal(["beforeend", ingredientHtml]);
+    })
   })
 
   describe('hideRecipe', function() {
-      it('should display the ID taken in as parameter', function(){
-        let hideSpy = makeSpy(domUpdates.hideRecipe);
-        let id = 1;
+    it('should display the ID taken in as parameter', function() {
+      let hideSpy = makeSpy(domUpdates.hideRecipe);
+      let id = 1;
 
-        hideSpy(id);
-        expect(document.getElementById.calledWith[0]).to.deep.equal([`${id}`]);
-      })
-
-      it('should be called once', function(){
-        let hideSpy = makeSpy(domUpdates.hideRecipe);
-        let id = 1;
-
-        hideSpy(id);
-        expect(document.getElementById.calls).to.equal(1);
-      })
-
-      it('should assign style display property', function(){
-        let hideSpy = makeSpy(domUpdates.hideRecipe);
-        let id = 1;
-
-        expect(node.style.display).to.equal(undefined);
-        hideSpy(id);
-        expect(node.style.display).to.equal('none');
-      })
+      hideSpy(id);
+      expect(document.getElementById.calledWith[0]).to.deep.equal([`${id}`]);
     })
+
+    it('should be called once', function() {
+      let hideSpy = makeSpy(domUpdates.hideRecipe);
+      let id = 1;
+
+      hideSpy(id);
+      expect(document.getElementById.calls).to.equal(1);
+    })
+
+    it('should assign style display property', function() {
+      let hideSpy = makeSpy(domUpdates.hideRecipe);
+      let id = 1;
+
+      expect(node.style.display).to.equal(undefined);
+      hideSpy(id);
+      expect(node.style.display).to.equal('none');
+    })
+  })
 });

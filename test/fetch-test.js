@@ -40,12 +40,12 @@ describe('post', function() {
 
     goFetch.post(item, user);
     expect(fetch).to.have.been.called.with('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
-        method: 'POST',
-        body: update,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      method: 'POST',
+      body: update,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   })
 })
 

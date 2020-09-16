@@ -67,7 +67,7 @@ describe('Pantry', function() {
     });
 
     it('should hold an array of ingredients', function() {
-      let inventory = {1: 2, 2: 3, 3: 4,4: 0.5};
+      let inventory = {1: 2, 2: 3, 3: 4, 4: 0.5};
       expect(pantry.stock).to.deep.equal(inventory);
     });
   });
@@ -95,7 +95,7 @@ describe('Pantry', function() {
       pantry.stock[2] = 0;
       pantry.stock[3] = 0;
       let recipe1Needs = [{id: 1, needs: 1.5, unit: 'c'}]
-      let recipe2Needs =[{id: 2, needs: 0.5, unit: 'tsp'}, {id: 3, needs: 1, unit: 'large'}]
+      let recipe2Needs = [{id: 2, needs: 0.5, unit: 'tsp'}, {id: 3, needs: 1, unit: 'large'}]
       expect(pantry.findMissingIngredients(doesNotHave)).to.deep.equal([{id: 5, needs: 1, unit: 'tsp'}]);
       expect(pantry.findMissingIngredients(recipe1)).to.deep.equal(recipe1Needs);
       expect(pantry.findMissingIngredients(recipe2)).to.deep.equal(recipe2Needs);

@@ -28,7 +28,7 @@ describe('User', function() {
     let userData = sampleUserData[0];
     user = new User(userData)
     recipes = [
-    {
+      {
         "name": "Loaded Chocolate Chip Pudding Cookie Cups",
         "id": 595736,
         "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
