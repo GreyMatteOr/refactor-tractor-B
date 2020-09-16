@@ -1,6 +1,5 @@
 @import "mixins.scss";
 @import "variables.scss";
-@import "media-queries.scss";
 
 html{
   height: 100%;
@@ -19,6 +18,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: auto;
+  min-width: 400px;
 
     h1 {
       align-self: center;
@@ -497,3 +497,5 @@ body {
     display: none;
   }
 }
+
+@import "media-queries.scss";

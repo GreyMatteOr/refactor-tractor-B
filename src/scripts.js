@@ -1,7 +1,5 @@
 import $ from 'jquery';
 
-import './css/variables.scss';
-import './css/mixins.scss';
 import './css/index.scss';
 import User from './user';
 import Recipe from './recipe';
