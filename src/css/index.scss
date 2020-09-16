@@ -6,7 +6,7 @@ html{
 }
 
 body {
-  background-color: $blue-gray-2;
+  background-color: $background-blue;
   display: grid;
   font-family: $quicksand;
   grid-template-columns: 1fr 5fr;
@@ -44,7 +44,7 @@ body {
 
     h4 {
       color: $white;
-      background-color: $blue-gray-2;
+      background-color: $background-blue;
       border-radius: 3px;
       margin: 10px 0px 0px 0px;
       padding: 1px 4px 1px 4px;
@@ -110,7 +110,7 @@ body {
     border-radius: 10px 0px 0px 10px;
     border: none;
     box-shadow: inset -3px -1px 20px 1px $blue-gray;
-    color: $blue-gray-2;
+    color: $background-blue;
     font-family: $quicksand;
     font-size: 42px;
     height: 100%;
@@ -130,7 +130,7 @@ body {
     }
 
     &::placeholder {
-      color: $blue-gray-2;
+      color: $background-blue;
       font-size: 20px;
       text-align: right;
       text-shadow: none;
@@ -150,7 +150,7 @@ body {
 
   .nav-btn {
     align-items: center;
-    background: $blue-gray-2 no-repeat;
+    background: $background-blue no-repeat;
     border: none;
     cursor: pointer;
     display: flex;
@@ -360,13 +360,13 @@ body {
 
   .filter-btn {
     &:hover {
-      background-color: $blue-gray-2;
+      background-color: $background-blue;
     }
     @include buttons;
   }
 
   .filter-btn {
-    background-color: $blue-gray-2;
+    background-color: $background-blue;
   }
 
   .hamburger {
@@ -463,7 +463,7 @@ body {
 
   #overlay {
     filter:alpha(opacity=50);
-    background-color: $blue-gray-2;
+    background-color: $background-blue;
     height:100%;
     left:0;
     opacity:0.5;
