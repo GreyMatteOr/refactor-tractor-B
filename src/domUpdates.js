@@ -1,26 +1,26 @@
 let domUpdates = {
   greetUser(firstName) {
     let welcomeMsg = `
-      <div class="welcome-msg">
-        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down-arrow.png'/>
+      <section class="welcome-msg">
+        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down_arrow.png'/>
         <h1>Welcome ${firstName}!</h1>
-      </div>`;
+      </section>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin", welcomeMsg);
   },
 
   addToDom(recipeInfo, shortRecipeName, node) {
     let cardHtml = `
-      <div class="recipe-card" id=${recipeInfo.id}>
+      <section role='button' tabindex="0" class="recipe-card" id=${recipeInfo.id}><a>
         <h3 maxlength="40">${shortRecipeName}</h3>
-        <div class="card-photo-container">
-          <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-          <div class="text">
-            <div>Click for Instructions</div>
-          </div>
-        </div>
+        <section class="card-photo-container">
+          <img role='img' src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
+          <section class="text">
+            <section>Click for Instructions</section>
+          </section>
+        </section>
         <h4>${recipeInfo.tags[0]}</h4>
         <img src="./images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-      </div>`
+      </a></section>`
     node.insertAdjacentHTML("beforeend", cardHtml);
   },
 
@@ -75,7 +75,7 @@ let domUpdates = {
   },
 
   addOverlay(node) {
-    node.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    node.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
   },
 
   generateRecipeTitle(recipe, ingredients, node, ingredientsData) {

@@ -143,6 +143,10 @@ body {
     }
   }
 
+.recipe-tag {
+  opacity: 0%;
+}
+
   .search-btn {
     border-left: 3px outset $border-hover-green;
     border-radius: 0px 15px 15px 0px;
