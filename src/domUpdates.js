@@ -2,7 +2,7 @@ let domUpdates = {
   greetUser(firstName) {
     let welcomeMsg = `
       <div class="welcome-msg">
-        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down_arrow.png'/>
+        <img id='tag-toggle' alt='A toggle arrow that shows and hides the search-by-tag menu' src='./images/down-arrow.png'/>
         <h1>Welcome ${firstName}!</h1>
       </div>`;
     document.querySelector(".banner-image").insertAdjacentHTML("afterbegin", welcomeMsg);
@@ -133,16 +133,35 @@ let domUpdates = {
     document.querySelector(".shopping-list").classList.add('hidden');
   },
 
-  toggleShoppingList(list) {
+  toggleShoppingList(list, ingredientsData = []) {
     document.querySelector(".drop-menu").classList.add('hidden');
     let needNode = document.querySelector(".shopping-list");
     let shoppingList = document.querySelector(".buy-ingredient-list");
     needNode.classList.toggle('hidden');
     shoppingList.innerHTML = '';
+    let totalCost = 0;
     list.forEach(item => {
-      shoppingList.innerHTML += `<li id="${item.name}>
-        <label for="${item.name}">${item.name}, ${item.needs} ${item.unit}</label></li>`
+      let itemData = ingredientsData.find(ingredient => ingredient.id === item.id)
+      totalCost += itemData.estimatedCostInCents;
+      console.log('TC', totalCost)
+      let costString = this.roundToDollars(itemData.estimatedCostInCents);
+      shoppingList.innerHTML += `
+      <li id="${item.name}>
+        <label for="${item.name}">${item.needs} ${item.unit} of ${item.name} : $${costString} </label>
+      </li>`;
     })
+    console.log('TC', totalCost)
+    let costString = this.roundToDollars(totalCost);
+    if(totalCost === 0) document.querySelector('.total-cost').innerText = ''
+    else document.querySelector('.total-cost').innerText = `Total Cost: $${costString}`;
+  },
+
+  roundToDollars(costInCents) {
+    let output = `${Math.round(+costInCents * 100) / 10000}`;
+    if(!output.includes('.')) return output;
+    let[whole, decimals] = output.split('.');
+    while(decimals.length < 2) decimals += '0';
+    return whole + '.' + decimals;
   },
 
   displayPantryInfo(pantry) {

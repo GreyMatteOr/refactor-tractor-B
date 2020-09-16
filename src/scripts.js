@@ -30,7 +30,7 @@ pantryBtn.addEventListener("click", () => {
 });
 savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
-shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList));
+shoppingList.addEventListener('click', () => domUpdates.toggleShoppingList(user.shoppingList, ingredientsData));
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 banner.addEventListener('click', toggleTags)
